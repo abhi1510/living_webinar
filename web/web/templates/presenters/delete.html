@@ -1,0 +1,53 @@
+{% extends 'layouts/author.html' %}
+
+{% block content %}
+
+<div class="row page-title">
+    <div class="col-md-5 align-self-center">
+        <h4>Presenters</h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'dashboard:dashboard' %}">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'presenters:list' %}">
+                        Presenters
+                    </a>
+                </li>
+                <li class="breadcrumb-item active">Delete</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title">Delete Presenter</h4>
+                <h6 class="card-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, at.</h6>
+
+                <form action="" method="post" class="mt-5">
+                    {% csrf_token %}
+                    <h5>Are you sure you want to delete {{ object.full_name }} ?</h5>
+                    <small>
+                        <i class="fas fa-user"></i> {{ object.user.email }}
+                        <i class="fas fa-calendar-alt ml-3"></i> {{ object.created_on }}
+                    </small>
+                    <div class="my-4">
+                        <a href="{% url 'presenters:list' %}" class="btn btn-sm btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-sm btn-primary">Confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

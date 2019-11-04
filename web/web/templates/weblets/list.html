@@ -1,0 +1,134 @@
+{% extends 'layouts/author.html' %}
+
+{% block title %} - Weblets{% endblock %}
+
+{% block substyle %}
+<style>
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="row page-title">
+    <div class="col-md-5 align-self-center">
+        <h4>Weblets</h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'dashboard:dashboard' %}">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item active">Weblets</li>
+            </ol>
+            <a href="{% url 'weblets:create' %}" class="btn btn-sm btn-secondary shadow-sm ml-3">
+                <i class="fa fa-plus-circle"></i> Create New
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">Showing all Weblets</h4>
+                        <h6 class="text-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio, pariatur.</h6>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <select class="form-control form-control-sm rounded-0">
+                                <option>Most Popular</option>
+                                <option>Some other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3 mb-4">
+                    {% for object in object_list %}
+                    <div class="col-lg-3">
+                        <div class="card shadow mb-3">
+                            <img class="card-img-top" src="{{ object.picture_thumbnail.url }}"
+                                 alt="Card image cap" height="150px;">
+                            <div class="card-img-overlay pt-2 pr-2 text-right">
+                                <a href="{% url 'weblets:update' object.slug %}"
+                                   class="btn btn-sm btn-primary">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                <a href="{% url 'weblets:delete' object.slug %}"
+                                   class="btn btn-sm btn-secondary">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                            <div class="card-body p-3">
+                                <h6 class="card-title">{{ object.title|truncatechars:25 }}</h6>
+                                <div class="d-flex justify-content-between">
+                                    <small>
+                                        <i class="fas fa-calendar-alt mr-1"></i>
+                                        {{object.created_on}}
+                                    </small>
+
+                                    {% if object.watcher_signup_required %}
+                                    <i class="fas fa-lock text-theme-primary"></i>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    {% if is_paginated %}
+                    <ul class="pagination pagination-sm">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a href="?page={{ page_obj.previous_page_number }}" class="page-link">Previous</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a href="#" class="page-link">Previous</a>
+                        </li>
+                        {% endif %}
+                        {% for i in paginator.page_range %}
+                        {% if page_obj.number == i %}
+                        <li class="page-item active">
+                            <!--<span>{{ i }} <span class="sr-only">(current)</span></span>-->
+                            <a href="" class="page-link">{{ i }}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a href="?page={{ page_obj.next_page_number }}" class="page-link">Next</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a href="#" class="page-link">Next</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block subscript %}
+<script>
+</script>
+{% endblock %}

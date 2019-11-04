@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/public.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/venobox/1.8.6/venobox.min.css"/>
+<style>
+
+</style>
+{% endblock %}
+
+{% block body %}
+
+{% include 'partials/navbar.html' %}
+
+<div class="container">
+    <div class="row my-3">
+        <div class="col-lg-8">
+            <h2>{{ object.title }}</h2>
+            <small>
+                <i class="fas fa-calendar-alt"></i> {{object.created_on}}
+            </small>
+            <p class="mt-2">
+                <span class="badge badge-secondary"><i class="fas fa-tag"></i> Tag 1</span>
+                <span class="badge badge-secondary"><i class="fas fa-tag"></i> Tag 2</span>
+                <span class="badge badge-secondary"><i class="fas fa-tag"></i> Tag 3</span>
+            </p>
+            <hr>
+            <div class="weblet-description">
+                {{ object.description|linebreaks }}
+            </div>
+            <img src="{{ object.picture_large.url }}" alt="" width="100%" class="img-thumbnail">
+        </div>
+        <div class="col-lg-4">
+            <div class="card borderTop">
+                <div class="card-body">
+                    <h4 class="card-title text-center">Panellists</h4>
+                    <br>
+                    {% if presenters %}
+                    {% for presenter in presenters %}
+                    <div class="media">
+                        {% if presenter.picture_thumbnail %}
+                        <img src="{{presenter.picture_thumbnail.url}}" class="img-thumbnail mr-3" alt="presenter-logo"
+                             width="50px" height="50px">
+                        {% else %}
+                        <img src="/media/presenters/default.jpg" class="img-thumbnail mr-3" alt="presenter-logo"
+                             width="50px" height="50px">
+                        {% endif %}
+                        <div class="media-body">
+                            <h6 class="mt-0">{{ presenter.full_name }}</h6>
+                            <p>{{ presenter.about|truncatechars:110 }}</p>
+                            <hr>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <p class="my-5 text-center" style="font-size: small">No presenter detail</p>
+                    {% endif %}
+                    <p class="text-center mt-4">
+                        <!--<button class="btn btn-sm btn-outline-primary">Watch Now</button>-->
+
+                        <a class="btn btn-sm btn-outline-primary venobox" data-autoplay="true" data-vbtype="video"
+                           href="https://www.youtube.com/watch?v=TOaOM5Zxr28">
+                            Watch Now
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/venobox/1.8.6/venobox.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.venobox').venobox();
+    });
+
+
+
+
+</script>
+{% endblock %}

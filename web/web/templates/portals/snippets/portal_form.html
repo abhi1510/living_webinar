@@ -1,0 +1,12 @@
+{% load crispy_forms_tags %}
+
+<form action="{{ portal_form_action }}" method="post" novalidate>
+    {% csrf_token %}
+    <div class="form-row">
+        <div class="form-group col mb-0">
+            {{ form.title|as_crispy_field }}
+        </div>
+    </div>
+    <a href="{% url 'portals:list' %}" class="btn btn-sm btn-secondary">Cancel</a>
+    <button type="submit" class="btn btn-sm btn-primary">Save</button>
+</form>

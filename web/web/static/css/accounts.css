@@ -1,0 +1,54 @@
+.card {
+    border: 0;
+    border-radius: 0;
+}
+
+#hint_id_username, #hint_id_password1, #hint_id_password2 {
+    display: none;
+}
+
+.col-form-label {
+    font-size: 12px;
+}
+
+.form-control {
+    border-radius: 2rem;
+}
+
+.btn {
+    border-radius: 2rem;
+}
+
+.side-cover {
+    background: linear-gradient(rgb(0,0,0,0.5), rgb(0,0,0,0.7)), url('https://images.unsplash.com/photo-1509822929063-6b6cfc9b42f2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.or {
+    color: #91979c;
+    display: flex;
+    flex-direction: row;
+}
+.or:after,
+.or:before{
+    content: "";
+    flex: 1 1;
+    border-bottom: 1px solid #ced4da;
+    margin: auto;
+}
+
+p {
+    font-size: 12px;
+}
+
+.alert {
+    font-size: 12px;
+    padding: .2rem;
+}
+
+.alert-danger {
+    color: #efefef;
+    background-color: #dc3545;
+}

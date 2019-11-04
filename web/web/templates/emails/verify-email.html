@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Verify Email</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background-color: #f2f7f9;
+            height: 100vh;
+        }
+        .card {
+            width: 60%;
+            margin: auto;
+            padding-top: 2%;
+            font-family: sans-serif;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 0 solid transparent;
+            border-radius: 0;
+        }
+        .card-body {
+            padding: 5%;
+            text-align: center;
+            border-radius: 10px;
+            background-color: #ffffff;
+        }
+        .card-title {
+            font-size: xx-large;
+            margin: 5%;
+        }
+        .card-text {
+            font-size: large;
+            margin-bottom: 10%;
+        }
+        .btn-primary {
+            color: #ffffff;
+            background-color: #2a94a5;
+            border-radius: 2rem;
+            width: 60%;
+            border-color: #007bff;
+        }
+        .btn {
+            margin-bottom: 5%;
+            display: inline-block;
+            font-weight: 400;
+            text-align: center;
+            vertical-align: middle;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            text-decoration: none;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+        @media screen and (max-width: 768px) {
+            .card {
+                width: 95%;
+            }
+            .card-body {
+                padding: 3%;
+            }
+            .card-title {
+                font-size: x-large;
+            }
+            .card-text {
+                font-size: medium;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <img src="https://my.comfyapp.com/static/occupant/img/envelope.69bbe561369e.gif"
+                 alt="" width="30%">
+            <div class="card-title">Email Confirmation</div>
+            <div class="card-text">
+                Hey {{email}}, you're almost ready to explore with Living Webinar.
+                Simply click below button to verify your email address.
+            </div>
+            <a href="{{ verify_url }}" class="btn btn-primary">Verify email</a>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

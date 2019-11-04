@@ -1,0 +1,112 @@
+{% extends 'layouts/author.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block title %} - Presenters{% endblock %}
+
+{% block substyle %}
+<link rel="stylesheet" href="{% static 'plugins/dropify/css/dropify.min.css' %}">
+<style>
+    .dropify-wrapper {
+        font-size: 13px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="row page-title">
+    <div class="col-md-5 align-self-center">
+        <h4>Presenters</h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'dashboard:dashboard' %}">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'presenters:list' %}">
+                        Presenters
+                    </a>
+                </li>
+                <li class="breadcrumb-item active">{{ title }}</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">{{ title }} Presenter</h4>
+                <h6 class="card-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, at.</h6>
+                <form action="" method="post" enctype="multipart/form-data" class="mt-4" novalidate>
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-4 mb-0">
+                            {{ form.full_name|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-4 mb-0">
+                            {{ form.title|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-4 mb-0">
+                            {{ form.company_name|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 mb-0">
+                            <label for="id_picture_thumbnail" class="col-form-label requiredField">
+                                Picture Thumbnail
+                            </label>
+                            <input type="file" name="picture_thumbnail" id="id_picture_thumbnail"
+                                   class="dropify" accept=".jpg, .png, image/jpeg, image/png" required>
+                        </div>
+                        <div class="form-group col-md-6 mb-0">
+                            <label for="id_picture_large" class="col-form-label  requiredField">
+                                Picture Large
+                            </label>
+                            <input type="file" name="picture_large" id="id_picture_large"
+                                   class="dropify" accept=".jpg, .png, image/jpeg, image/png" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 mb-0">
+                            {{ form.linked_in_url|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-6 mb-0">
+                            {{ form.linked_in_url|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12 mb-0">
+                            {{ form.about|as_crispy_field }}
+                        </div>
+                    </div>
+                    <a href="{% url 'presenters:list' %}" class="btn btn-sm btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-sm btn-primary">{{title}}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block subscript %}
+<script src="{% static 'plugins/dropify/js/dropify.min.js' %}"></script>
+<script>
+$('#id_picture_thumbnail').dropify();
+$('#id_picture_large').dropify();
+
+</script>
+{% endblock %}

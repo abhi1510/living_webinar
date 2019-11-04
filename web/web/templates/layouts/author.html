@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/author.css' %}">
+{% block substyle %}{% endblock %}
+{% endblock %}
+
+{% block body %}
+
+<div class="wrapper">
+
+    <!-- Sidebar -->
+    {% include 'partials/admin-sidebar.html' %}
+    <!-- end of Sidebar -->
+
+    <!-- Page Content -->
+    <div id="content">
+
+        <!-- Navbar -->
+        {% include 'partials/admin-navbar.html' %}
+        <!-- end of Navbar -->
+
+        <div class="container-fluid">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    <!-- end of Page Content -->
+</div>
+
+
+{% endblock %}
+
+
+{% block script %}
+<script>
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar, #content').toggleClass('active');
+        });
+    });
+
+
+</script>
+
+{% block subscript %}{% endblock %}
+
+{% endblock %}

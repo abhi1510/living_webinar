@@ -1,0 +1,346 @@
+{% extends 'layouts/author.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %} - Settings{% endblock %}
+
+{% block substyle %}
+<style>
+    #hint_id_password1,  #hint_id_password2 {
+        font-size: 10px;
+    }
+
+
+
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="row page-title">
+    <div class="col-md-5 align-self-center">
+        <h4>Settings</h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'dashboard:dashboard' %}">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item active">Settings</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<ul class="nav nav-pills nav-fill" id="pills-tab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="pills-account-info-tab" data-toggle="pill" href="#pills-account-info" role="tab"
+           aria-controls="pills-account-info" aria-selected="true">Account Information</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="pills-users-tab" data-toggle="pill" href="#pills-users" role="tab"
+           aria-controls="pills-users" aria-selected="false">Users</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="pills-account-settings-tab" data-toggle="pill" href="#pills-account-settings" role="tab"
+           aria-controls="pills-account-settings" aria-selected="false">Account Settings</a>
+    </li>
+</ul>
+
+<div class="row mb-3">
+    <div class="col">
+        <div class="card shadow-sm">
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-account-info" role="tabpanel"
+                     aria-labelledby="pills-account-info-tab">
+                    <div class="row p-4">
+                        <div class="col-lg-4">
+                            <div class="text-center shadow-sm py-4 mb-4">
+                                <img src="http://eliteadmin.themedesigner.in/demos/bt4/assets/images/users/2.jpg"
+                                     class="rounded-circle" alt="..." height="100px">
+                                <h6 class="mt-3">{{ request.user.email }}</h6>
+                                <p style="font-size: 11px">
+                                    <strong class="text-theme-primary mr-2">{{ request.user.type|title }}</strong>
+                                </p>
+                                <p class="mb-1" style="font-size: 11px">
+                                    Date Joined {{ request.user.created_on }}
+                                </p>
+                                <p style="font-size: 11px">
+                                    Last Updated On {{ request.user.last_modified_on }}
+                                </p>
+                            </div>
+                            <form action="{% url 'settings:user_update' %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-row">
+                                    <div class="form-group col-md-12 mb-0">
+                                        {{ user_change_form.first_name|as_crispy_field }}
+                                    </div>
+                                    <div class="form-group col-md-12 mb-0">
+                                        {{ user_change_form.last_name|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-primary">Update</button>
+                            </form>
+                        </div>
+                        <div class="col-lg-8">
+                            <form action="{% url 'settings:account_update' %}" method="post">
+                                {% csrf_token %}
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-12 mb-0">
+                                        {{ account_form.organisation_name|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4 mb-0">
+                                        {{ account_form.country|as_crispy_field }}
+                                    </div>
+                                    <div class="form-group col-md-4 mb-0">
+                                        {{ account_form.state|as_crispy_field }}
+                                    </div>
+                                    <div class="form-group col-md-4 mb-0">
+                                        {{ account_form.city|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-5 mb-0">
+                                        {{ account_form.zip|as_crispy_field }}
+                                    </div>
+                                    <div class="form-group col-md-7 mb-0">
+                                        {{ account_form.phone|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12 mb-0">
+                                        {{ account_form.street_address|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-primary">Update</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-users" role="tabpanel"
+                     aria-labelledby="pills-users-tab">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h4 class="card-title">Showing all Users</h4>
+                                            <h6 class="card-subtitle">Lorem ipsum dolor sit amet, consectetur
+                                                adipisicing elit. Asperiores,
+                                                at.</h6>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-secondary btn-sm ml-3" data-toggle="modal"
+                                                    data-target="#userCreateModal">
+                                                <i class="fa fa-plus-circle"></i> Add User
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive mt-4">
+                                        <table class="table table-bordered table-hover text-center">
+                                            <thead class="bg-theme-secondary text-white">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Email</th>
+                                                <th>Name</th>
+                                                <th>Type</th>
+                                                <th>Status</th>
+                                                <th>Created On</th>
+                                                <th>Last Modified On</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for user in account.users.all %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ user.email }}</td>
+                                                <td>
+                                                    {% if user.first_name %}
+                                                    {{ user.first_name }} {{ user.last_name }}
+                                                    {% else %}
+                                                    -
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ user.type|title }}</td>
+                                                <td>{{ user.status|title }}</td>
+                                                <td>{{ user.created_on }}</td>
+                                                <td>{{ user.last_modified_on }}</td>
+
+                                            </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-account-settings" role="tabpanel"
+                     aria-labelledby="pills-account-settings-tab">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h4 class="card-title">Let's Change the Theme</h4>
+                                            <h6 class="card-subtitle">
+                                                The theme will be applied across all the accounts.
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <table class="table mt-4 text-center">
+                                        <thead>
+                                        <tr>
+                                            <th>Primary</th>
+                                            <th>Secondary</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <i id="theme1-primary" class="fas fa-square fa-2x"></i>
+                                            </td>
+                                            <td>
+                                                <i id="theme1-secondary" class="fas fa-square fa-2x"></i>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-dark" onclick="applyTheme('theme1')">
+                                                    <i class="fas fa-save"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <i id="theme2-primary" class="fas fa-square fa-2x"></i>
+                                            </td>
+                                            <td>
+                                                <i id="theme2-secondary" class="fas fa-square fa-2x"></i>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-dark" onclick="applyTheme('theme2')">
+                                                    <i class="fas fa-save"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <i id="theme3-primary" class="fas fa-square fa-2x"></i>
+                                            </td>
+                                            <td>
+                                                <i id="theme3-secondary" class="fas fa-square fa-2x"></i>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-dark" onclick="applyTheme('theme3')">
+                                                    <i class="fas fa-save"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Add User Modal-->
+<div class="modal fade" id="userCreateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-theme-primary">
+                <h5 class="modal-title text-white">Add User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'settings:user_add' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-12 mb-0">
+                            {{ user_add_form.email|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-6 mb-0">
+                            {{ user_add_form.first_name|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-6 mb-0">
+                            {{ user_add_form.last_name|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-12 mb-0">
+                            {{ user_add_form.password1|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-12 mb-0">
+                            {{ user_add_form.password2|as_crispy_field }}
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block subscript %}
+<script>
+    let themes = {
+        'theme1': {
+            'primary': '#2EA59C',
+            'primary-dark': '#249C93',
+            'secondary': '#95a5a6',
+            'secondary-dark': '#95a5a6'
+        },
+        'theme2': {
+            'primary': '#0019D6',
+            'primary-dark': '#0318B4',
+            'secondary': '#D7A51F',
+            'secondary-dark': '#B68C1C',
+        },
+        'theme3': {
+            'primary': '#E24800',
+            'primary-dark': '#C33E00',
+            'secondary': '#5E5E5E',
+            'secondary-dark': '#505050',
+        }
+    }
+
+    $.each(themes, function(k, v) {
+        $(`#${k}-primary`).css('color', v.primary);
+        $(`#${k}-secondary`).css('color', v.secondary);
+    });
+
+    function applyTheme(theme) {
+        if(themes[theme] !== undefined) {
+            localStorage.setItem('theme-primary', themes[theme]['primary']);
+            localStorage.setItem('theme-primary-dark', themes[theme]['primary-dark']);
+            localStorage.setItem('theme-secondary', themes[theme]['secondary']);
+            localStorage.setItem('theme-secondary-dark', themes[theme]['secondary-dark']);
+            window.location.href = window.location.href;
+        } else {
+            console.log('Invalid theme');
+        }
+    }
+
+
+
+</script>
+{% endblock %}

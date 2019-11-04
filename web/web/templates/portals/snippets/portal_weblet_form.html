@@ -1,0 +1,22 @@
+{% load crispy_forms_tags %}
+
+<form action="{{ portal_weblet_form_action }}" method="post" novalidate>
+    {% csrf_token %}
+    <div class="form-row">
+        <div class="form-group col mb-0">
+            {{ form.weblet|as_crispy_field }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col mb-0">
+            <div class="input-group mb-3">
+                {{ form.weblet_rank }}
+                <div class="input-group-append">
+                    <button class="btn btn-sm btn-outline-primary">
+                        <i class="fa fa-plus-circle"></i> Add
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,31 @@
+.jumbotron {
+    background: linear-gradient(rgb(0,0,0,0.5), rgb(0,0,0,0.7)), url('https://images.unsplash.com/photo-1563457012475-13cf086fd600?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.card {
+    border: 0;
+    border-radius: 0;
+}
+
+.card .card-img-top {
+    border-radius: 0;
+}
+
+.borderTop {
+    border-top: 2px solid var(--theme-primary);
+}
+
+.borderBottom {
+    border-bottom: 2px solid var(--theme-primary);
+}
+
+.media-body p {
+    font-size: 11px;
+}
+
+.weblet-description {
+    font-size: 14px !important;
+}

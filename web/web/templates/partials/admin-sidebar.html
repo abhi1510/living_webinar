@@ -1,0 +1,75 @@
+{% load static %}
+
+{% url 'dashboard:dashboard' as dashboard_url %}
+{% url 'presenters:list' as presenter_list_url %}
+{% url 'weblets:list' as weblet_list_url %}
+{% url 'portals:list' as portal_list_url %}
+{% url 'settings:home' as settings_home_url %}
+
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <img src="{% static 'assets/main_logo_transparent.png' %}" alt="" class="sidebar-brand">
+    </div>
+    <div class="user-profile">
+        <div class="user-profile-body">
+            <div>
+                <img src="http://eliteadmin.themedesigner.in/demos/bt4/assets/images/users/2.jpg"
+                     alt="user-img" class="rounded-circle">
+            </div>
+            <div class="dropdown">
+                <a href="javascript:void(0)" class="dropdown-toggle u-dropdown link hide-menu"
+                   data-toggle="dropdown"
+                   role="button" aria-haspopup="true" aria-expanded="false">Abhinav Kumar
+                    <span class="caret"></span>
+                </a>
+                <div class="dropdown-menu animated swing">
+                    <a href="" class="dropdown-item">
+                        <i class="ti-settings"></i> Account Settings
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="{% url 'accounts:logout' %}" class="dropdown-item">
+                        <i class="fa fa-power-off"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <ul class="sidebar-menu">
+        <li class="{% if request.path == dashboard_url %}current{% endif %}">
+            <a href="{{ dashboard_url }}">
+                <i class="fas fa-home sidebar-item-icon"></i> Dashboard
+            </a>
+        </li>
+        <li class="{% if request.path == weblet_list_url %}current{% endif %}">
+            <a href="{{ weblet_list_url }}">
+                <i class="fas fa-play-circle sidebar-item-icon"></i> Weblets
+            </a>
+        </li>
+        <li class="{% if request.path == presenter_list_url %}current{% endif %}">
+            <a href="{% url 'presenters:list' %}">
+                <i class="fa fa-laptop sidebar-item-icon"></i> Presenters
+            </a>
+        </li>
+        <li>
+            <a href="">
+                <i class="fas fa-users sidebar-item-icon"></i> Watchers
+            </a>
+        </li>
+        <li class="{% if request.path == portal_list_url %}current{% endif %}">
+            <a href="{{ portal_list_url }}">
+                <i class="fas fa-globe sidebar-item-icon"></i> Portals
+            </a>
+        </li>
+        <li>
+            <a href="">
+                <i class="fas fa-chart-bar sidebar-item-icon"></i> Analytics
+            </a>
+        </li>
+        <li class="{% if request.path == settings_home_url %}current{% endif %}">
+            <a href="{{ settings_home_url }}">
+                <i class="fas fa-cogs sidebar-item-icon"></i> Settings
+            </a>
+        </li>
+    </ul>
+</nav>

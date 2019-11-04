@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+<style>
+    .form-control {
+        border: 2px solid #ced4da;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row my-5">
+        <div class="col-lg-3">
+            <a href="{% url 'portals:list' %}">Back to Portal</a>
+        </div>
+        <div class="col-lg-6">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+    <div class="row">
+        {% for pw in instance.portal_weblet.all %}
+        <div class="col-lg-3 col-md-6">
+            <div id="{{object.slug}}" class="card mb-3 shadow-lg borderBottom">
+                <img class="card-img-top" src="{{ pw.weblet.picture_thumbnail.url }}"
+                     alt="Card image cap" height="130px;">
+                <div class="card-body p-3">
+                    <h5 class="card-title">{{ pw.weblet.title|truncatechars:25 }}</h5>
+                    <div class="d-block">
+                        <small>
+                            <i class="fas fa-user mr-1"></i>
+                            {{pw.weblet.created_by.email|truncatechars:25}}
+                        </small>
+                        <br>
+                        <small>
+                            <i class="fas fa-calendar-alt mr-1"></i>
+                            {{pw.weblet.created_on}}
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

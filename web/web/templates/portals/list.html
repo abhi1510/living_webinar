@@ -1,0 +1,140 @@
+{% extends 'layouts/author.html' %}
+
+{% block title %} - Portals{% endblock %}
+
+{% block content %}
+
+<div class="row page-title">
+    <div class="col-md-5 align-self-center">
+        <h4>Portals</h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'dashboard:dashboard' %}">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item active">Portals</li>
+            </ol>
+            <button type="button" class="btn btn-sm btn-secondary ml-3"
+                    data-toggle="modal" data-target="#portalCreateModal">
+                <i class="fa fa-plus-circle"></i> Create New
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">Showing all Portals</h4>
+                        <h6 class="card-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores,
+                            at.</h6>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <select class="form-control form-control-sm rounded-0">
+                                <option>Most Popular</option>
+                                <option>Some other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive mt-4">
+                    <table class="table table-bordered table-hover text-center">
+                        <thead class="bg-theme-secondary text-white">
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Weblets</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for object in object_list %}
+                        <tr>
+                            <td>{{ object_list.start_index|add:forloop.counter0 }}</td>
+                            <td>
+                                {{ object.title }}
+                                <a class="btn btn-sm btn-outline-secondary py-0 rounded-0 ml-2"
+                                   href="{% url 'portals:preview' object.slug %}"
+                                   style="font-size: 11px">Preview</a></td>
+                            <td>{{ object.weblets_count }}</td>
+                            <td>
+                                <a href="{% url 'portals:update' object.slug %}"
+                                   class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                <a href="{% url 'portals:delete' object.slug %}"
+                                   class="btn btn-sm btn-outline-secondary">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-center">
+                    {% if object_list.has_other_pages %}
+                    <ul class="pagination pagination-sm">
+                        {% if object_list.has_previous %}
+                        <li class="page-item">
+                            <a href="?page={{ object_list.previous_page_number }}" class="page-link">Previous</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a href="#" class="page-link">Previous</a>
+                        </li>
+                        {% endif %}
+                        {% for i in object_list.paginator.page_range %}
+                        {% if object_list.number == i %}
+                        <li class="page-item active">
+                            <!--<span>{{ i }} <span class="sr-only">(current)</span></span>-->
+                            <a href="" class="page-link">{{ i }}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                        {% if object_list.has_next %}
+                        <li class="page-item">
+                            <a href="?page={{ object_list.next_page_number }}" class="page-link">Next</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a href="#" class="page-link">Next</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="portalCreateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-theme-primary">
+                <h4 class="modal-title text-white">Create Portal</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% include 'portals/snippets/portal_form.html' with form=portal_form %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
