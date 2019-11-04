@@ -1,7 +1,7 @@
 from .base import *
 
 # TODO: change this to prod URL
-HOST = 'http://localhost:8001'
+HOST = 'http://ec2-18-190-105-126.us-east-2.compute.amazonaws.com'
 
 DATABASES = {
     'default': {
