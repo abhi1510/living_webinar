@@ -1,0 +1,11 @@
+# Working directory - /home/ubuntu/living_webinar
+
+sudo cp deploy/lw_supervisor.conf /etc/supervisor/conf.d
+
+mkdir logs/gunicorn
+
+sudo supervisorctl update
+
+sudo supervisorctl reload
+
+ps aux | grep gunicorn
