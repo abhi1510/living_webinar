@@ -1,0 +1,49 @@
+--Gunicorn
+
+vi bin/gunicorn_start
+
+sudo chmod u+x gunicorn_start
+
+pip install setproctitle
+
+sudo ./gunicorn_start
+
+------------------------------------------------
+
+--Starting and monitoring with Supervisor
+
+sudo vi /etc/supervisor/conf.d/lw.conf
+
+[program:livingwebinar]
+command = /home/ubuntu/living_webinar/deploy/gunicorn_start             ; Command to start app
+user = root                                                             ; User to run as
+stdout_logfile = /home/ubuntu/logs/gunicorn/gunicorn_supervisor.log     ; Where to write log messages
+stderr_logfile = /home/ubuntu/logs/gunicorn/gunicorn_supervisor_err.log ; Where to write  stderr log
+environment=LANG=en_US.UTF-8,LC_ALL=en_US.UTF-8
+
+Make sure that log folders are there
+
+sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl status livingwebinar
+sudo supervisorctl stop livingwebinar
+sudo supervisorctl start livingwebinar
+sudo supervisorctl restart livingwebinar
+
+
+------------------------------------------------
+
+--Create an Nginx virtual server configuration for Django
+
+sudo vi /etc/nginx/sites-available/lw.nginxconf
+
+sudo nginx -t
+
+sudo ln /etc/nginx/sites-available/lw.nginxconf /etc/nginx/sites-enabled/
+
+sudo nginx -t
+
+sudo service nginx restart
+
+
+Ref -- http://michal.karzynski.pl/blog/2013/06/09/django-nginx-gunicorn-virtualenv-supervisor/
