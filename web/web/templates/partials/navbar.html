@@ -27,6 +27,9 @@
             </li>
             {% else %}
             <li class="nav-item">
+                <a class="nav-link mr-1 py-1 btn btn-sm btn-outline-secondary text-white" href="{% url 'accounts:login' %}">Login</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link py-1 btn btn-sm btn-secondary text-white" href="{% url 'accounts:sign_up_option' %}">Explore With Us</a>
             </li>
             {% endif %}

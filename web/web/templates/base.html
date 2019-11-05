@@ -15,11 +15,11 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
 
     <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
-    <link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'vendor/fontawesome/css/all.min.css' %}">
-    <link rel="stylesheet" href="{% static 'vendor/animate/animate.css' %}">
-    <link rel="stylesheet" href="{% static 'vendor/c3/c3.min.css' %}">
-    <link rel="stylesheet" href="{% static 'vendor/toastr/toastr.min.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'vendor/fontawesome/css/all.min.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'vendor/animate/animate.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'vendor/c3/c3.min.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'vendor/toastr/toastr.min.css' %}">
 
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     {% block style %}{% endblock %}
@@ -55,6 +55,7 @@
         "showMethod": "show",
         "hideMethod": "hide"
     };
+
     $(document).ready(function() {
         $(':root').css('--theme-primary', localStorage.getItem('theme-primary') || '#2EA59C');
         $(':root').css('--theme-primary-dark', localStorage.getItem('theme-primary-dark') || '#249C93');

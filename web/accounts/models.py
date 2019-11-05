@@ -22,7 +22,7 @@ USER_STATUS_CHOICES = (
 
 
 class Account(models.Model):
-    organisation_name = models.CharField(max_length=255, unique=True)
+    organisation_name = models.CharField(max_length=256, unique=True)
     street_address = models.TextField(null=True, blank=True)
     city = models.CharField(max_length=128, null=True, blank=True)
     state = models.CharField(max_length=128, null=True, blank=True)
@@ -31,8 +31,8 @@ class Account(models.Model):
     phone = models.CharField(max_length=128, null=True, blank=True)
     created_on = models.DateTimeField(auto_now=True)
     last_modified_on = models.DateTimeField(auto_now_add=True)
-    created_by = models.CharField(max_length=255)
-    last_modified_by = models.CharField(max_length=255)
+    created_by = models.CharField(max_length=256)
+    last_modified_by = models.CharField(max_length=256)
 
     def __str__(self):
         return self.organisation_name
