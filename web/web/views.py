@@ -6,7 +6,7 @@ from presenters.models import Presenter
 
 def home_view(request):
     context = {
-        'object_list': Weblet.objects.all()
+        'object_list': Weblet.objects.filter(publish_on_lw_website=True, status='published')
     }
     return render(request, 'public/home.html', context)
 
@@ -14,8 +14,7 @@ def home_view(request):
 def weblet_detail_view(request, slug):
     weblet = get_object_or_404(Weblet, slug=slug)
     context = {
-        'object': weblet,
-        'presenters': Presenter.objects.all()
+        'object': weblet
     }
     return render(request, 'public/weblet_detail.html', context)
 

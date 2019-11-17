@@ -1,9 +1,13 @@
+import json
+
+from django.shortcuts import redirect
 from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Weblet
 from .forms import WebletForm
+from presenters.models import Presenter
 
 
 class WebletListView(LoginRequiredMixin, generic.ListView):
@@ -15,6 +19,10 @@ class WebletListView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(WebletListView, self).get_context_data(*args, **kwargs)
+        context['presenters'] = Presenter.objects.filter(account=self.request.user.account)
+        context['weblet_presenter'] = [{weblet.id: [p.id for p in weblet.presenters.all()]} for weblet in
+                                       self.get_queryset()]
+
         return context
 
 
@@ -78,3 +86,16 @@ class WebletDeleteView(LoginRequiredMixin, generic.DeleteView):
         context = super(WebletDeleteView, self).get_context_data(**kwargs)
         context['page_title'] = 'Presenter Delete'
         return context
+
+
+def manipulate_weblet_presenter(request):
+    weblet_id = request.POST.get('weblet_id')
+    weblet = Weblet.objects.get(id=weblet_id)
+    presenters = json.loads(request.POST.get('presenters'))
+    for _id, status in presenters.items():
+        presenter = Presenter.objects.get(id=_id)
+        if status:
+            weblet.presenters.add(presenter)
+        else:
+            weblet.presenters.remove(presenter)
+    return redirect('weblets:list')

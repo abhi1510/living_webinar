@@ -5,7 +5,7 @@ from .views import (
     WebletDetailView,
     WebletCreateView,
     WebletUpdateView,
-    WebletDeleteView
+    WebletDeleteView,
 )
 
 app_name = 'weblets'

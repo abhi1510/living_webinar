@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import TemplateView
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -23,6 +22,7 @@ urlpatterns = [
     path('portals/', include('portals.urls', namespace='portals')),
     path('settings/', include('settings.urls', namespace='settings')),
 
+    path('api/weblets/', include('weblets.api.urls', namespace='weblets-api')),
     path('api/portals/', include('portals.api.urls', namespace='portals-api')),
     # path('api/tags/', include('tags.api.urls', namespace='tags-api')),
 

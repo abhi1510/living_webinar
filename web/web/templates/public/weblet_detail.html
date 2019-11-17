@@ -37,14 +37,14 @@
                 <div class="card-body">
                     <h4 class="card-title text-center">Panellists</h4>
                     <br>
-                    {% if presenters %}
-                    {% for presenter in presenters %}
+                    {% if object.presenters.all %}
+                    {% for presenter in object.presenters.all %}
                     <div class="media">
                         {% if presenter.picture_thumbnail %}
                         <img src="{{presenter.picture_thumbnail.url}}" class="img-thumbnail mr-3" alt="presenter-logo"
                              width="50px" height="50px">
                         {% else %}
-                        <img src="/media/presenters/default.jpg" class="img-thumbnail mr-3" alt="presenter-logo"
+                        <img src="/static/img/presenters/default.jpg" class="img-thumbnail mr-3" alt="presenter-logo"
                              width="50px" height="50px">
                         {% endif %}
                         <div class="media-body">
@@ -55,7 +55,7 @@
                     </div>
                     {% endfor %}
                     {% else %}
-                    <p class="my-5 text-center" style="font-size: small">No presenter detail</p>
+                    <p class="mt-4 mb-5 text-center" style="font-size: small">No presenter detail</p>
                     {% endif %}
                     <p class="text-center mt-4">
                         <!--<button class="btn btn-sm btn-outline-primary">Watch Now</button>-->

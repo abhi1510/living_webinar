@@ -246,6 +246,10 @@
 
 /* end of nav pills */
 
+.modal-content {
+    border: 0;
+}
+
 /* MEDIA QUERIES */
 
 @media (max-width: 768px) {

@@ -38,7 +38,8 @@
                 <div class="d-flex justify-content-between">
                     <div>
                         <h4 class="card-title">Showing all Weblets</h4>
-                        <h6 class="text-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio, pariatur.</h6>
+                        <h6 class="text-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio,
+                            pariatur.</h6>
                     </div>
                     <div>
                         <div class="form-group">
@@ -57,6 +58,10 @@
                             <img class="card-img-top" src="{{ object.picture_thumbnail.url }}"
                                  alt="Card image cap" height="150px;">
                             <div class="card-img-overlay pt-2 pr-2 text-right">
+                                <button class="btn btn-sm btn-primary" data-toggle="modal"
+                                        data-target="#addPresenterModal" data-weblet-id="{{object.id}}">
+                                    <i class="fas fa-user"></i>
+                                </button>
                                 <a href="{% url 'weblets:update' object.slug %}"
                                    class="btn btn-sm btn-primary">
                                     <i class="fas fa-pencil-alt"></i>
@@ -73,7 +78,6 @@
                                         <i class="fas fa-calendar-alt mr-1"></i>
                                         {{object.created_on}}
                                     </small>
-
                                     {% if object.watcher_signup_required %}
                                     <i class="fas fa-lock text-theme-primary"></i>
                                     {% endif %}
@@ -125,10 +129,95 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="addPresenterModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-theme-primary">
+                <h4 class="modal-title text-white">Add Presenter</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group mb-3" id="webletPresenterGroup">
+                    {% for presenter in presenters %}
+                    <li class="list-group-item d-flex justify-content-between">
+                        <div class="media">
+                            <img src="/static/img/presenters/default.jpg" class="img-thumbnail mr-3" alt="..." width="30">
+                            <div class="media-body" style="font-size: small">
+                                <span class="mt-0">{{presenter.full_name}}</span> <br>
+                                <span style="font-size: xx-small">{{presenter.title}}</span>
+                            </div>
+                        </div>
+                        <input type="checkbox" data-presenter-id="{{ presenter.id }}">
+                    </li>
+                    {% endfor %}
+                </ul>
+                <button class="btn btn-sm btn-secondary" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-sm btn-primary" id="saveWebletPresenter">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 {% endblock %}
 
 {% block subscript %}
 <script>
+
+    let presenters = {};
+
+    let webletPresenterPayload = {
+        csrfmiddlewaretoken: "{{ csrf_token }}",
+        weblet_id: null,
+        presenters: {}
+    }
+
+    $('#addPresenterModal').on('show.bs.modal', function(e) {
+        let webletId = $(e.relatedTarget).data('weblet-id');
+        $('#webletPresenterGroup input[type=checkbox]').each(function() {
+            let presenterId = $(this).attr('data-presenter-id');
+            $(this).attr('id', `w-${webletId}p-${presenterId}`);
+        });
+
+        $('#webletPresenterGroup input[type=checkbox]').attr('data-weblet-id', webletId);
+
+        let weblet_presenter_ids = $.grep({{weblet_presenter}}, function(e) { return e[parseInt(webletId)] });
+        let presenter_ids = weblet_presenter_ids[0][webletId];
+        $('#webletPresenterGroup input[type=checkbox]').each(function() {
+            $(this).attr('checked', false);
+        })
+        $.each(presenter_ids, function(i, v) {
+            $('#w-'+webletId+'p-'+v).attr('checked', true);
+        });
+
+        webletPresenterPayload['weblet_id'] = webletId;
+    });
+
+    $('#webletPresenterGroup input[type=checkbox]').change(function() {
+        let isChecked = $(this).is(":checked");
+        let webletId = $(this).attr('data-weblet-id');
+        let presenterId = $(this).attr('data-presenter-id');
+        webletPresenterPayload['weblet_id'] = webletId;
+        presenters[presenterId] = isChecked;
+    });
+
+    $('#saveWebletPresenter').click(function() {
+        webletPresenterPayload['presenters'] = JSON.stringify(presenters);
+        presenters= {};
+        $.ajax({
+            type: "POST",
+            url: "/api/weblets/manipulate_weblet_presenter",
+            data: webletPresenterPayload,
+            success: function() {
+                window.location.href = window.location.href;
+            },
+            dataType: 'json'
+        });
+    });
+
+
 </script>
 {% endblock %}

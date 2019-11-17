@@ -59,10 +59,14 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                if user.type == 'admin' or user.type == 'author':
-                    return redirect('dashboard:dashboard')
+                _next = request.GET.get('next')
+                if _next:
+                    return redirect(_next)
                 else:
-                    return redirect('home')
+                    if user.type == 'admin' or user.type == 'author':
+                        return redirect('dashboard:dashboard')
+                    else:
+                        return redirect('home')
     else:
         form = AuthenticationForm(request=request)
     return render(request, 'accounts/login.html', context={'form': form})
