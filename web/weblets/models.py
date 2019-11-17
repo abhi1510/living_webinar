@@ -35,7 +35,7 @@ class Weblet(models.Model):
     webinar_recording_link = models.CharField(max_length=512)
     watcher_signup_required = models.BooleanField(default=False)
     publish_on_lw_website = models.BooleanField(default=False)
-    presenters = models.ManyToManyField(Presenter, null=True, blank=True)
+    presenters = models.ManyToManyField(Presenter, blank=True)
     slug = models.SlugField(unique=True, blank=True)
     created_on = models.DateTimeField(auto_now=True)
     last_modified_on = models.DateTimeField(auto_now_add=True)

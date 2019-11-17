@@ -140,11 +140,14 @@
                 </button>
             </div>
             <div class="modal-body">
+
+                {% if presenters %}
                 <ul class="list-group mb-3" id="webletPresenterGroup">
                     {% for presenter in presenters %}
                     <li class="list-group-item d-flex justify-content-between">
                         <div class="media">
-                            <img src="/static/img/presenters/default.jpg" class="img-thumbnail mr-3" alt="..." width="30">
+                            <img src="/static/img/presenters/default.jpg" class="img-thumbnail mr-3" alt="..."
+                                 width="30">
                             <div class="media-body" style="font-size: small">
                                 <span class="mt-0">{{presenter.full_name}}</span> <br>
                                 <span style="font-size: xx-small">{{presenter.title}}</span>
@@ -156,6 +159,13 @@
                 </ul>
                 <button class="btn btn-sm btn-secondary" data-dismiss="modal">Cancel</button>
                 <button class="btn btn-sm btn-primary" id="saveWebletPresenter">Save</button>
+                {% else %}
+                <div class="my-4 text-center">
+                    <small>No presenters are available for this account</small>
+                    <br><br>
+                    <a href="{% url 'presenters:create' %}" class="btn btn-sm btn-primary">Go to Add Presenter</a>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -217,6 +227,11 @@
             dataType: 'json'
         });
     });
+
+
+
+
+
 
 
 </script>

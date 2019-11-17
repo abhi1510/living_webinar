@@ -61,7 +61,7 @@ def portal_update_view(request, slug):
     return render(request, 'portals/update.html', {
         'portal_form': form,
         'portal_form_action': reverse_lazy('portals:update', kwargs={'slug': slug}),
-        'portal_weblet_form': PortalWebletForm(portal_id=instance.id),
+        'portal_weblet_form': PortalWebletForm(portal_id=instance.id, account_id=request.user.account.id),
         'portal_weblet_form_action': reverse_lazy('portals:portal_weblet_add', kwargs={'portal_slug': slug}),
         'portal_weblets': portal_weblets
     })

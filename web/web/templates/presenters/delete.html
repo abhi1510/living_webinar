@@ -36,7 +36,7 @@
                     {% csrf_token %}
                     <h5>Are you sure you want to delete {{ object.full_name }} ?</h5>
                     <small>
-                        <i class="fas fa-user"></i> {{ object.user.email }}
+                        <i class="fas fa-user"></i> {{ object.created_by.email }}
                         <i class="fas fa-calendar-alt ml-3"></i> {{ object.created_on }}
                     </small>
                     <div class="my-4">
