@@ -22,7 +22,7 @@ USER_STATUS_CHOICES = (
 
 
 class Account(models.Model):
-    organisation_name = models.CharField(max_length=256, unique=True)
+    organisation_name = models.CharField(max_length=200, unique=True)
     street_address = models.TextField(null=True, blank=True)
     city = models.CharField(max_length=128, null=True, blank=True)
     state = models.CharField(max_length=128, null=True, blank=True)
