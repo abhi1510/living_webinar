@@ -13,3 +13,6 @@ class Tag(models.Model):
                                    related_name='tag_created_by')
     last_modified_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True,
                                          related_name='tag_modified_by')
+
+    def __str__(self):
+        return self.name

@@ -89,7 +89,7 @@ def portal_preview_view(request, slug):
 def portal_weblet_add_view(request, portal_slug):
     instance = get_object_or_404(Portal, slug=portal_slug)
     if request.method == 'POST':
-        form = PortalWebletForm(data=request.POST)
+        form = PortalWebletForm(portal_id=instance.id, account_id=request.user.account.id, data=request.POST)
         if form.is_valid():
             form.instance.portal = instance
             form.instance.account = request.user.account

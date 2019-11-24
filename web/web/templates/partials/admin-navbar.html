@@ -12,7 +12,7 @@
         <ul class="navbar-nav ml-auto">
             {% if request.user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'accounts:sign_up' %}">Hello {{ request.user.email }}</a>
+                <a class="nav-link" href="{% url 'settings:home' %}">Hello {{ request.user.email }}</a>
             </li>
             {% else %}
             <li class="nav-item">

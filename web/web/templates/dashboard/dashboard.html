@@ -28,16 +28,16 @@
     </div>
 </div>
 
-<div class="row mb-3">
+<div class="row mb-4">
     <div class="col">
         <div class="card-deck">
             <div class="card shadow-sm">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                        <i class="fas fa-shopping-cart fa-2x text-theme-primary"></i>
+                        <i class="fas fa-play-circle fa-3x text-theme-primary"></i>
                         <div class="text-right text-secondary">
-                            <h6>Sales</h6>
-                            <h4>$135000</h4>
+                            <h6>Weblets</h6>
+                            <h4>{{ weblets_count }}</h4>
                         </div>
                     </div>
                 </div>
@@ -45,10 +45,10 @@
             <div class="card shadow-sm">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                        <i class="fas fa-money-bill fa-2x text-theme-primary"></i>
+                        <i class="fa fa-laptop fa-3x text-theme-primary"></i>
                         <div class="text-right text-secondary">
-                            <h6>Expenses</h6>
-                            <h4>$39000</h4>
+                            <h6>Presenters</h6>
+                            <h4>{{ presenters_count }}</h4>
                         </div>
                     </div>
                 </div>
@@ -56,10 +56,10 @@
             <div class="card shadow-sm">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                        <i class="fa fa-users fa-2x text-theme-primary"></i>
+                        <i class="fas fa-globe fa-3x text-theme-primary"></i>
                         <div class="text-right text-secondary">
-                            <h6>Users</h6>
-                            <h4>15000</h4>
+                            <h6>Portals</h6>
+                            <h4>{{ portals_count }}</h4>
                         </div>
                     </div>
                 </div>
@@ -67,21 +67,21 @@
             <div class="card shadow-sm">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                        <i class="fas fa-chart-bar fa-2x text-theme-primary"></i>
+                        <i class="fas fa-user-edit fa-3x text-theme-primary"></i>
+                        <div class="text-right text-secondary">
+                            <h6>Authors</h6>
+                            <h4>{{ authors_count }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <i class="fas fa-chart-line fa-3x text-theme-primary"></i>
                         <div class="text-right text-secondary">
                             <h6>Visitors</h6>
-                            <h4>45000</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <i class="fas fa-chart-line fa-2x text-theme-primary"></i>
-                        <div class="text-right text-secondary">
-                            <h6>Visitors</h6>
-                            <h4>45000</h4>
+                            <h4>{{ visitors_count }}</h4>
                         </div>
                     </div>
                 </div>
@@ -90,6 +90,35 @@
 
     </div>
 </div>
+
+<!--<div class="row mb-4">-->
+<!--    <div class="col">-->
+<!--        <div class="card shadow-sm">-->
+<!--            <div class="card-body">-->
+<!--                <div class="d-flex justify-content-between">-->
+<!--                    <div>-->
+<!--                        <h4 class="card-title">Watchers</h4>-->
+<!--                        <h6 class="card-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores,-->
+<!--                            at.</h6>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="form-group">-->
+<!--                            <select class="form-control form-control-sm rounded-0">-->
+<!--                                <option>Most Popular</option>-->
+<!--                                <option>Some other</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+
+
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+
+<!--</div>-->
 
 {% endblock %}
 

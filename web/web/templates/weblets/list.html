@@ -38,8 +38,9 @@
                 <div class="d-flex justify-content-between">
                     <div>
                         <h4 class="card-title">Showing all Weblets</h4>
-                        <h6 class="text-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio,
-                            pariatur.</h6>
+                        <h6 class="text-secondary">
+                            Weblets are widgets that will be available for your audience on your own website or LivingWebinar.Com
+                        </h6>
                     </div>
                     <div>
                         <div class="form-group">
@@ -57,18 +58,18 @@
                         <div class="card shadow mb-3">
                             <img class="card-img-top" src="{{ object.picture_thumbnail.url }}"
                                  alt="Card image cap" height="150px;">
-                            <div class="card-img-overlay pt-2 pr-2 text-right">
+                            <div class="card-img-overlay pt-2 pr-2 text-right" style="height: 30px">
                                 <button class="btn btn-sm btn-primary" data-toggle="modal"
                                         data-target="#addPresenterModal" data-weblet-id="{{object.id}}">
-                                    <i class="fas fa-user"></i>
+                                    <i class="fas fa-user" data-toggle="tooltip" title="Attach Presenters"></i>
                                 </button>
                                 <a href="{% url 'weblets:update' object.slug %}"
                                    class="btn btn-sm btn-primary">
-                                    <i class="fas fa-pencil-alt"></i>
+                                    <i class="fas fa-pencil-alt" data-toggle="tooltip" title="Update"></i>
                                 </a>
                                 <a href="{% url 'weblets:delete' object.slug %}"
                                    class="btn btn-sm btn-secondary">
-                                    <i class="fas fa-trash"></i>
+                                    <i class="fas fa-trash" data-toggle="tooltip" title="Delete"></i>
                                 </a>
                             </div>
                             <div class="card-body p-3">
@@ -79,7 +80,7 @@
                                         {{object.created_on}}
                                     </small>
                                     {% if object.watcher_signup_required %}
-                                    <i class="fas fa-lock text-theme-primary"></i>
+                                    <i class="fas fa-lock text-theme-primary" data-toggle="tooltip" title="Watcher Sign Up required"></i>
                                     {% endif %}
                                 </div>
                             </div>

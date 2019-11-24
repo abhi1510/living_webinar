@@ -4,7 +4,6 @@
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'css/public.css' %}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/venobox/1.8.6/venobox.min.css"/>
 <style>
 
 </style>
@@ -22,9 +21,9 @@
                 <i class="fas fa-calendar-alt"></i> {{object.created_on}}
             </small>
             <p class="mt-2">
-                <span class="badge badge-secondary"><i class="fas fa-tag"></i> Tag 1</span>
-                <span class="badge badge-secondary"><i class="fas fa-tag"></i> Tag 2</span>
-                <span class="badge badge-secondary"><i class="fas fa-tag"></i> Tag 3</span>
+                {% for tag in object.get_tags %}
+                <span class="badge badge-secondary"><i class="fas fa-tag"></i> {{ tag }}</span>
+                {% endfor %}
             </p>
             <hr>
             <div class="weblet-description">
@@ -58,10 +57,10 @@
                     <p class="mt-4 mb-5 text-center" style="font-size: small">No presenter detail</p>
                     {% endif %}
                     <p class="text-center mt-4">
-                        <!--<button class="btn btn-sm btn-outline-primary">Watch Now</button>-->
 
-                        <a class="btn btn-sm btn-outline-primary venobox" data-autoplay="true" data-vbtype="video"
-                           href="https://www.youtube.com/watch?v=TOaOM5Zxr28">
+
+                        <a class="btn btn-sm btn-outline-primary" href="{{ object.webinar_recording_link }}"
+                           target="_blank">
                             Watch Now
                         </a>
                     </p>
@@ -75,13 +74,7 @@
 {% endblock %}
 
 {% block script %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/venobox/1.8.6/venobox.min.js"></script>
 <script>
-    $(document).ready(function(){
-        $('.venobox').venobox();
-    });
-
-
 
 
 </script>

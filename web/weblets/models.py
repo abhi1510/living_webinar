@@ -50,6 +50,12 @@ class Weblet(models.Model):
     def __str__(self):
         return self.title
 
+    def get_tags(self):
+        tags = self.tags
+        if tags:
+            return tags.split(',')
+        return []
+
 
 @receiver(pre_save, sender=Weblet)
 def weblet_pre_save_receiver(sender, instance, *args, **kwargs):

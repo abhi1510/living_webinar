@@ -1,6 +1,6 @@
 from .base import *
 
-HOST = 'http://ec2-18-190-105-126.us-east-2.compute.amazonaws.com'
+HOST = 'http://livingwebinar.com'
 
 DATABASES = {
     'default': {

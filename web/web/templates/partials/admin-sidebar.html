@@ -8,7 +8,9 @@
 
 <nav id="sidebar">
     <div class="sidebar-header">
-        <img src="{% static 'assets/main_logo_transparent.png' %}" alt="" class="sidebar-brand">
+        <a href="{% url 'home' %}">
+            <img src="{% static 'assets/main_logo_transparent.png' %}" alt="" class="sidebar-brand">
+        </a>
     </div>
     <div class="user-profile">
         <div class="user-profile-body">
@@ -19,13 +21,17 @@
             <div class="dropdown">
                 <a href="javascript:void(0)" class="dropdown-toggle u-dropdown link hide-menu"
                    data-toggle="dropdown"
-                   role="button" aria-haspopup="true" aria-expanded="false">Abhinav Kumar
+                   role="button" aria-haspopup="true" aria-expanded="false">
+                    <span style="font-size: small">
+                        {% if request.user.first_name %}
+                            {{ request.user.first_name }}
+                        {% else %}
+                            {{ request.user.email|truncatechars:20 }}
+                        {% endif %}
+                    </span>
                     <span class="caret"></span>
                 </a>
                 <div class="dropdown-menu animated swing">
-                    <a href="{% url 'home' %}" class="dropdown-item">
-                        <i class="fas fa-home"></i> Home
-                    </a>
                     <a href="{% url 'settings:home' %}" class="dropdown-item">
                         <i class="fas fa-cogs"></i> Account Settings
                     </a>

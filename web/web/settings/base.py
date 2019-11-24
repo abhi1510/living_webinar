@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'presenters',
     'weblets',
     'portals',
+    'tags',
 ]
 
 MIDDLEWARE = [

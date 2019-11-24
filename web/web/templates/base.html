@@ -63,7 +63,11 @@
         $(':root').css('--theme-secondary-dark', localStorage.getItem('theme-secondary-dark') || '#95a5a6');
         $(':root').css('--theme-text-light', localStorage.getItem('theme-text-light') || '#37474f');
         $(':root').css('--theme-text-dark', localStorage.getItem('theme-text-dark') || '#4e4e4e');
-    })
+    });
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
 
 </script>
 {% block script %}{% endblock %}
