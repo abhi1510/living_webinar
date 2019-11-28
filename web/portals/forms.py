@@ -7,16 +7,13 @@ from .models import Portal, PortalWeblet
 class PortalForm(forms.ModelForm):
     class Meta:
         model = Portal
-        fields = ('title',)
+        fields = ('title', 'status')
 
 
 class PortalWebletForm(forms.ModelForm):
     class Meta:
         model = PortalWeblet
-        fields = ('weblet', 'weblet_rank')
-        widgets = {
-            'weblet_rank': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Portal Rank'}),
-        }
+        fields = ('weblet',)
 
     def __init__(self, *args, **kwargs):
         portal_id = kwargs.pop('portal_id', None)

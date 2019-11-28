@@ -31,10 +31,11 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
-                    <div>
+                    <div style="max-width: 80%">
                         <h4 class="card-title">Showing all Portals</h4>
-                        <h6 class="card-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores,
-                            at.</h6>
+                        <h6 class="card-subtitle">
+                            Portals are a collection of Weblets that can be presented on your website or sent to your audience via email. You can create multiple portals and get unique public pages for your portals.
+                        </h6>
                     </div>
                     <div>
                         <div class="form-group">
@@ -51,6 +52,7 @@
                         <tr>
                             <th>#</th>
                             <th>Title</th>
+                            <th>Status</th>
                             <th>Weblets</th>
                             <th>Actions</th>
                         </tr>
@@ -63,7 +65,9 @@
                                 {{ object.title }}
                                 <a class="btn btn-sm btn-outline-secondary py-0 rounded-0 ml-2"
                                    href="{% url 'portals:preview' object.slug %}"
-                                   style="font-size: 11px">Preview</a></td>
+                                   style="font-size: 11px">Preview</a>
+                            </td>
+                            <td>{{ object.status.title }}</td>
                             <td>{{ object.weblets_count }}</td>
                             <td>
                                 <a href="{% url 'portals:update' object.slug %}"

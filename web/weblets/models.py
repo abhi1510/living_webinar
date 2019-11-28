@@ -9,7 +9,7 @@ from presenters.models import Presenter
 
 User = settings.AUTH_USER_MODEL
 
-PORTAL_STATUS_ENUM = (
+WEBLET_STATUS_ENUM = (
     ('draft', 'Draft'),
     ('published', 'Published'),
     ('deleted', 'Deleted'),
@@ -28,7 +28,7 @@ class Weblet(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE, blank=True, related_name='weblet')
     title = models.CharField(max_length=100)
     description = models.TextField()
-    status = models.CharField(max_length=10, default='draft', choices=PORTAL_STATUS_ENUM)
+    status = models.CharField(max_length=10, default='draft', choices=WEBLET_STATUS_ENUM)
     picture_thumbnail = models.ImageField(upload_to=picture_thumbnail_path)
     picture_large = models.ImageField(upload_to=picture_large_path)
     tags = models.TextField(null=True, blank=True)

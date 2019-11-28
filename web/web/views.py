@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 
 from weblets.models import Weblet
-from presenters.models import Presenter
 
 
 def home_view(request):

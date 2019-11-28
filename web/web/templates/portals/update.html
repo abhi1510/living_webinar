@@ -30,30 +30,38 @@
 </div>
 
 <div class="row mb-3">
-    <div class="col-lg-6">
+    <div class="col-lg-5">
         <div class="card shadow-sm">
             <div class="card-body">
-                <h4 class="card-title">Update Portal</h4>
-                <h6 class="card-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, at.</h6>
+                <h4 class="card-title">Modify Weblet</h4>
                 {% include 'portals/snippets/portal_form.html' with form=portal_form %}
             </div>
         </div>
-        <hr>
-        <div class="card shadow-sm">
+
+        <div class="card shadow-sm my-4">
             <div class="card-body">
-                <h4 class="card-title">Add Weblet</h4>
-                <h6 class="card-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, at.</h6>
-                {% include 'portals/snippets/portal_weblet_form.html' with form=portal_weblet_form %}
+                <h4 class="card-title">Generate Sharable Script</h4>
+                <h6 class="card-text">This can only be generated once a portal is published.</h6>
+                <hr class="mt-2">
+
+                <div class="text-center py-5">
+                    {% if object.status == 'published' %}
+                    <button class="btn btn-outline-primary">Generate</button>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-7">
         <div class="card shadow-sm">
             <div class="card-body">
-                <h4 class="card-title">Portal Weblets</h4>
-                <h6 class="card-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, at.</h6>
-
-                <div class="table-responsive mt-4">
+                <div class="d-flex justify-content-between">
+                    <h4 class="card-title">Portal Weblets</h4>
+                    <button class="btn btn-sm btn-primary" data-target="#addWebletModal" data-toggle="modal">Add
+                    </button>
+                </div>
+                <hr class="mt-2">
+                <div class="table-responsive">
                     <table class="table table-bordered table-portal-weblet">
                         <thead class="bg-theme-secondary text-white">
                         <tr>
@@ -68,16 +76,17 @@
                         <tr>
                             <td class="text-center">{{ forloop.counter }}</td>
                             <td class="text-left">
-                                <img src="{{ pw.weblet.picture_thumbnail.url }}" alt=""
-                                     width="35" class="img-thumbnail p-0 mr-2">
+                                <img alt="" class="img-thumbnail p-0 mr-2"
+                                     src="{{ pw.weblet.picture_thumbnail.url }}" width="35">
                                 {{ pw.weblet.title }}
                             </td>
                             <td class="text-center">
                                 <form action="{% url 'portals:portal_weblet_update_rank' pw.id %}" method="post">
                                     {% csrf_token %}
                                     <div class="input-group">
-                                        <input type="number" class="form-control form-control-sm" name="weblet_rank"
-                                               value="{{ pw.weblet_rank }}" style="width: 30px">
+                                        <input class="form-control form-control-sm" name="weblet_rank"
+                                               style="width: 30px"
+                                               type="number" value="{{ pw.weblet_rank }}">
                                         <div class="input-group-append">
                                             <button class="btn btn-sm btn-outline-secondary rounded-0">
                                                 <i class="fas fa-pencil-alt"></i>
@@ -88,8 +97,8 @@
 
                             </td>
                             <td class="text-center">
-                                <a href="{% url 'portals:portal_weblet_remove' pw.id %}"
-                                   class="btn btn-sm btn-outline-secondary">
+                                <a class="btn btn-sm btn-outline-secondary"
+                                   href="{% url 'portals:portal_weblet_remove' pw.id %}">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </td>
@@ -103,32 +112,32 @@
                     <ul class="pagination pagination-sm">
                         {% if portal_weblets.has_previous %}
                         <li class="page-item">
-                            <a href="?page={{ portal_weblets.previous_page_number }}" class="page-link">Previous</a>
+                            <a class="page-link" href="?page={{ portal_weblets.previous_page_number }}">Previous</a>
                         </li>
                         {% else %}
                         <li class="page-item disabled">
-                            <a href="#" class="page-link">Previous</a>
+                            <a class="page-link" href="#">Previous</a>
                         </li>
                         {% endif %}
                         {% for i in portal_weblets.paginator.page_range %}
                         {% if portal_weblets.number == i %}
                         <li class="page-item active">
                             <!--<span>{{ i }} <span class="sr-only">(current)</span></span>-->
-                            <a href="" class="page-link">{{ i }}</a>
+                            <a class="page-link" href="">{{ i }}</a>
                         </li>
                         {% else %}
                         <li class="page-item">
-                            <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+                            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
                         </li>
                         {% endif %}
                         {% endfor %}
                         {% if portal_weblets.has_next %}
                         <li class="page-item">
-                            <a href="?page={{ portal_weblets.next_page_number }}" class="page-link">Next</a>
+                            <a class="page-link" href="?page={{ portal_weblets.next_page_number }}">Next</a>
                         </li>
                         {% else %}
                         <li class="page-item disabled">
-                            <a href="#" class="page-link">Next</a>
+                            <a class="page-link" href="#">Next</a>
                         </li>
                         {% endif %}
                     </ul>
@@ -139,5 +148,23 @@
     </div>
 </div>
 
+
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="addWebletModal" role="dialog"
+     tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-theme-primary">
+                <h5 class="modal-title text-white">Add Weblet</h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% include 'portals/snippets/portal_weblet_form.html' with form=portal_weblet_form %}
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

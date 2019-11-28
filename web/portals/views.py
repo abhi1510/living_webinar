@@ -58,7 +58,9 @@ def portal_update_view(request, slug):
             form.save()
             return redirect('portals:list')
     form = PortalForm(instance=instance)
+
     return render(request, 'portals/update.html', {
+        'object': instance,
         'portal_form': form,
         'portal_form_action': reverse_lazy('portals:update', kwargs={'slug': slug}),
         'portal_weblet_form': PortalWebletForm(portal_id=instance.id, account_id=request.user.account.id),
@@ -92,6 +94,7 @@ def portal_weblet_add_view(request, portal_slug):
         form = PortalWebletForm(portal_id=instance.id, account_id=request.user.account.id, data=request.POST)
         if form.is_valid():
             form.instance.portal = instance
+            form.instance.weblet_rank = PortalWeblet.get_last_weblet_rank(request.user.account) + 1
             form.instance.account = request.user.account
             form.instance.created_by = request.user
             form.instance.last_modified_by = request.user
