@@ -2,8 +2,10 @@
 
 {% url 'dashboard:dashboard' as dashboard_url %}
 {% url 'presenters:list' as presenter_list_url %}
+{% url 'watchers:list' as watcher_list_url %}
 {% url 'weblets:list' as weblet_list_url %}
 {% url 'portals:list' as portal_list_url %}
+{% url 'analytics:home' as analytics_home_url %}
 {% url 'settings:home' as settings_home_url %}
 
 <nav id="sidebar">
@@ -57,12 +59,12 @@
             </a>
         </li>
         <li class="{% if request.path == presenter_list_url %}current{% endif %}">
-            <a href="{% url 'presenters:list' %}">
+            <a href="{{ presenter_list_url }}">
                 <i class="fa fa-laptop sidebar-item-icon"></i> Presenters
             </a>
         </li>
-        <li>
-            <a href="">
+        <li class="{% if request.path == watcher_list_url %}current{% endif %}">
+            <a href="{{ watcher_list_url }}">
                 <i class="fas fa-users sidebar-item-icon"></i> Watchers
             </a>
         </li>
@@ -71,8 +73,8 @@
                 <i class="fas fa-globe sidebar-item-icon"></i> Portals
             </a>
         </li>
-        <li>
-            <a href="">
+        <li class="{% if request.path == analytics_home_url %}current{% endif %}">
+            <a href="{{ analytics_home_url }}">
                 <i class="fas fa-chart-bar sidebar-item-icon"></i> Analytics
             </a>
         </li>

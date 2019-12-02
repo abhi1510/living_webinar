@@ -22,8 +22,9 @@ INSTALLED_APPS = [
     'crispy_forms',
 
     'accounts',
-    'presenters',
     'weblets',
+    'presenters',
+    'watchers',
     'portals',
     'tags',
 ]

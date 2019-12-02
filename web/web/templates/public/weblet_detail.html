@@ -58,11 +58,16 @@
                     {% endif %}
                     <p class="text-center mt-4">
 
-
-                        <a class="btn btn-sm btn-outline-primary" href="{{ object.webinar_recording_link }}"
+                        <a class="btn btn-sm btn-outline-primary"
+                           href="/watchers/record_watcher/{{ object.id }}?redirect_url={{ object.webinar_recording_link }}"
                            target="_blank">
                             Watch Now
                         </a>
+
+<!--                        <a class="btn btn-sm btn-outline-primary" href="{{ object.webinar_recording_link }}"-->
+<!--                           target="_blank">-->
+<!--                            Watch Now-->
+<!--                        </a>-->
                     </p>
                 </div>
             </div>

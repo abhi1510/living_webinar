@@ -15,18 +15,18 @@ urlpatterns = [
     # temp
     path('test', test_view),
 
-    path('dashboard', include('dashboard.urls', namespace='dashboard')),
     path('accounts/', include('accounts.urls', namespace='accounts')),
-    path('presenters/', include('presenters.urls', namespace='presenters')),
-    path('api/tags/', include('tags.urls', namespace='tags')),
+    path('dashboard', include('dashboard.urls', namespace='dashboard')),
     path('weblets/', include('weblets.urls', namespace='weblets')),
+    path('presenters/', include('presenters.urls', namespace='presenters')),
+    path('watchers/', include('watchers.urls', namespace='watchers')),
     path('portals/', include('portals.urls', namespace='portals')),
+    path('analytics/', include('analytics.urls', namespace='analytics')),
     path('settings/', include('settings.urls', namespace='settings')),
-
 
     path('api/weblets/', include('weblets.api.urls', namespace='weblets-api')),
     path('api/portals/', include('portals.api.urls', namespace='portals-api')),
-
+    path('api/tags/', include('tags.urls', namespace='tags')),
 
 ]
 

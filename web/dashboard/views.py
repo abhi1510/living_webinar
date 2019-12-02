@@ -9,6 +9,6 @@ def dashboard_view(request):
         'presenters_count': request.user.account.presenter.count(),
         'portals_count': request.user.account.portal.count(),
         'authors_count': request.user.account.users.count(),
-        'visitors_count': 0
+        'watchers_count': request.user.account.watchers.count()
     }
     return render(request, 'dashboard/dashboard.html', context)
