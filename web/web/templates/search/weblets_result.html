@@ -31,6 +31,8 @@
 </div>
 
 <div class="container">
+    <h4>Showing results for {{ query }}</h4>
+    <hr>
     <div class="row">
         {% for object in object_list %}
         <div class="col-md-6 col-lg-3">
@@ -66,13 +68,13 @@
     $('.card').click(function() {
         if($(this).attr('data-login-required') === 'True') {
             if('{{request.user.is_authenticated}}' === 'True') {
-                window.location.href = window.location.href + 'webcast/' + $(this).attr('id');
+                window.location.href = window.location.origin + '/webcast/' + $(this).attr('id');
             } else {
-                //window.location.href = window.location.href + 'webcast/' + $(this).attr('id');
-                window.location.href = '/accounts/login?next=/webcast/'+$(this).attr('id');
+                //window.location.href = window.location.href + '/webcast/' + $(this).attr('id');
+                window.location.href = window.location.origin + '/accounts/login?next=/webcast/'+$(this).attr('id');
             }
         } else {
-            window.location.href = window.location.href + 'webcast/' + $(this).attr('id');
+            window.location.href = window.location.origin + '/webcast/' + $(this).attr('id');
         }
     })
 

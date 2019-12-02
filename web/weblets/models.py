@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.conf import settings
 from django.dispatch import receiver
 from django.db.models.signals import pre_save
@@ -24,6 +25,14 @@ def picture_large_path(instance, filename):
     return 'weblets/{}/large/{}'.format(instance.title, filename)
 
 
+class WebletManager(models.Manager):
+
+    def search(self, query):
+        lookups = Q(title__icontains=query) | Q(description__icontains=query) | Q(
+            presenters__full_name__icontains=query) | Q(tags__icontains=query)
+        return self.get_queryset().filter(lookups).distinct()
+
+
 class Weblet(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE, blank=True, related_name='weblet')
     title = models.CharField(max_length=100)
@@ -43,6 +52,8 @@ class Weblet(models.Model):
                                    related_name='weblet_created_by')
     last_modified_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True,
                                          related_name='weblet_modified_by')
+
+    objects = WebletManager()
 
     class Meta:
         ordering = ('-created_on', '-last_modified_on')

@@ -23,6 +23,7 @@ urlpatterns = [
     path('portals/', include('portals.urls', namespace='portals')),
     path('analytics/', include('analytics.urls', namespace='analytics')),
     path('settings/', include('settings.urls', namespace='settings')),
+    path('search/', include('search.urls', namespace='search')),
 
     path('api/weblets/', include('weblets.api.urls', namespace='weblets-api')),
     path('api/portals/', include('portals.api.urls', namespace='portals-api')),
