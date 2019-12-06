@@ -1,0 +1,68 @@
+{% extends 'layouts/author.html' %}
+
+{% block content %}
+
+<div class="row page-title">
+    <div class="col-md-5 align-self-center">
+        <h4>Weblets</h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'dashboard:dashboard' %}">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'weblets:list' %}">
+                        Weblets
+                    </a>
+                </li>
+            </ol>
+            <a href="https://zoom.us/oauth/authorize?response_type=code&client_id=2AAjch3rQ0mRQdRZmK4UlA&redirect_uri=http://localhost:8001/accounts/oauth/token"
+               target="_blank" rel="noopener noreferrer" class="ml-3">
+                <img src="https://marketplacecontent.zoom.us/zoom_marketplace/img/add_to_zoom.png" height="25"
+                     alt="Add to ZOOM"/>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                {% if error %}
+                    <h4 class="mt-5">{{ error}}</h4>
+                {% else %}
+                <h4 class="card-title">Import Your Weblets</h4>
+                <h6 class="card-subtitle text-info">
+                    {{ message }}
+                </h6>
+                {% endif %}
+                <br>
+                <ul class="list-group">
+                    {% for webinar in webinars %}
+                    <li class="list-group-item p-4">
+                        {{ webinar.topic }} <br>
+                        ID: {{ webinar.id }} <br>
+                        UUID: {{ webinar.uuid }} <br>
+                        HOST_ID: {{ webinar.host_id }} <br>
+                        TYPE: {{ webinar.type }} <br>
+                        START_TIME: {{ webinar.start_time }} <br>
+                        DURATION: {{ webinar.duration }} <br>
+                        TIMEZONE: {{ webinar.timezone }} <br>
+                        AGENDA: {{ webinar.agenda }} <br>
+                        CREATED_AT: {{ webinar.created_at }} <br>
+                        JOIN_URL: {{ webinar.join_url }} <br>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

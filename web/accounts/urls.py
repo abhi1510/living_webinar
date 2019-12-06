@@ -8,6 +8,8 @@ from .views import (
     verify_email_view,
     sign_up_complete_view,
     login_view,
+
+    obtain_token,
 )
 
 app_name = 'accounts'
@@ -21,4 +23,7 @@ urlpatterns = [
     path('sign-up-success', sign_up_success_view, name='sign_up_success'),
     path('verify-email/<str:token>', verify_email_view, name='verify_email'),
     path('sign-up-complete', sign_up_complete_view, name='sign_up_complete'),
+
+    path('oauth/token', obtain_token, name='token'),
+
 ]

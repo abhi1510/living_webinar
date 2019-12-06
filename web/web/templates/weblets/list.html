@@ -27,6 +27,10 @@
             <a href="{% url 'weblets:create' %}" class="btn btn-sm btn-secondary shadow-sm ml-3">
                 <i class="fa fa-plus-circle"></i> Create New
             </a>
+            <a href="{% url 'weblets:zoom_import' %}" class="btn btn-sm btn-secondary shadow-sm ml-1">
+                <i class="fa fa-download"></i> Import from Zoom
+            </a>
+
         </div>
     </div>
 </div>
@@ -39,7 +43,8 @@
                     <div>
                         <h4 class="card-title">Showing all Weblets</h4>
                         <h6 class="text-secondary">
-                            Weblets are widgets that will be available for your audience on your own website or LivingWebinar.Com
+                            Weblets are widgets that will be available for your audience on your own website or
+                            LivingWebinar.Com
                         </h6>
                     </div>
                     <div>
@@ -80,7 +85,8 @@
                                         {{object.created_on}}
                                     </small>
                                     {% if object.watcher_signup_required %}
-                                    <i class="fas fa-lock text-theme-primary" data-toggle="tooltip" title="Watcher Sign Up required"></i>
+                                    <i class="fas fa-lock text-theme-primary" data-toggle="tooltip"
+                                       title="Watcher Sign Up required"></i>
                                     {% endif %}
                                 </div>
                             </div>
@@ -228,6 +234,7 @@
             dataType: 'json'
         });
     });
+
 
 
 

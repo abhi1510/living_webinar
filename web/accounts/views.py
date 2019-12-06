@@ -1,6 +1,10 @@
+import base64
+import requests
+
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm
+from django.conf import settings
 
 from .models import CustomUser, USER_STATUS_CHOICES
 from .forms import SignUpForm
@@ -70,3 +74,37 @@ def login_view(request):
     else:
         form = AuthenticationForm(request=request)
     return render(request, 'accounts/login.html', context={'form': form})
+
+
+def obtain_token(request):
+    authorization_code = request.GET.get('code')
+    zoom_token_ep = 'https://zoom.us/oauth/token'
+    app_redirect = '{}/accounts/oauth/token'.format(settings.HOST)
+
+    client_id = settings.OAUTH_PROVIDERS['ZOOM']['CLIENT_ID']
+    client_secret = settings.OAUTH_PROVIDERS['ZOOM']['CLIENT_SECRET']
+
+    encoded_bytes = base64.b64encode('{}:{}'.format(client_id, client_secret).encode("utf-8"))
+    encoded_str = str(encoded_bytes, "utf-8")
+    auth = 'Basic {}'.format(encoded_str)
+
+    headers = {'Authorization': auth}
+    url = '{}?grant_type=authorization_code&code={}&redirect_uri={}'.format(zoom_token_ep,
+                                                                            authorization_code,
+                                                                            app_redirect)
+    res = requests.post(url, headers=headers)
+
+    if res.status_code == 200:
+        token = res.json()
+        request.session['token_type'] = token.get('token_type')
+        request.session['access_token'] = token.get('access_token')
+        request.session['refresh_token'] = token.get('refresh_token')
+    return redirect('weblets:zoom_import')
+
+
+def refresh_token():
+    pass
+
+
+def revoke_token():
+    pass

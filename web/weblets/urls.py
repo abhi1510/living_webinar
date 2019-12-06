@@ -6,6 +6,8 @@ from .views import (
     WebletCreateView,
     WebletUpdateView,
     WebletDeleteView,
+
+    zoom_import
 )
 
 app_name = 'weblets'
@@ -16,4 +18,6 @@ urlpatterns = [
     path('create', WebletCreateView.as_view(), name='create'),
     path('<str:slug>/update', WebletUpdateView.as_view(), name='update'),
     path('<str:slug>/delete', WebletDeleteView.as_view(), name='delete'),
+
+    path('zoom/import', zoom_import, name='zoom_import'),
 ]

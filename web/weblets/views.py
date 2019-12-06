@@ -1,6 +1,7 @@
 import json
+import requests
 
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -99,3 +100,28 @@ def manipulate_weblet_presenter(request):
         else:
             weblet.presenters.remove(presenter)
     return redirect('weblets:list')
+
+
+def zoom_import(request):
+    context = {}
+    token_type = request.session.get('token_type')
+    access_token = request.session.get('access_token')
+    if token_type and access_token:
+        headers = {
+            'Authorization': '{} {}'.format(token_type, access_token)
+        }
+        params = {
+            'page_size': 30,
+            'page_number': 1
+        }
+        res = requests.get('https://api.zoom.us/v2/users/{}/webinars'.format('richa.ahuja@livingwebinar.com'),
+                           params=params, headers=headers)
+        if res.status_code == 200:
+            webinars = res.json()['webinars']
+            context['webinars'] = webinars
+            context['message'] = 'You are good to start importing'
+        else:
+            context['error'] = res.json()['message']
+    else:
+        context['message'] = 'Click \'Add to Zoom\' to start importing'
+    return render(request, 'weblets/zoom_import.html', context)
