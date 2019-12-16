@@ -1,67 +1,59 @@
 (function() {
-    let BASE_URL = 'http://localhost:8001/';
-    let weblets = [
-        {
-            'img_url': BASE_URL + 'media/weblets/Webinar%20by%20Abhinav%20Kumar/thumbnail/preview_4.png',
-            'title': 'Why IoT is so hot',
-            'created_by': 'abhinav.kumar',
-            'created_on': new Date()
-        },
-        {
-            'img_url': BASE_URL + 'media/weblets/Why%20IoT%20is%20so%20hot/thumbnail/preview_1_xkCKW60.png',
-            'title': 'Webinar by Abhinav',
-            'created_by': 'abhinav.kumar',
-            'created_on': new Date()
-        },
-        {
-            'img_url': BASE_URL + 'media/weblets/Weblet%20by%20Richa%20Ahuja/thumbnail/preview_2_ffF9HBD.png',
-            'title': 'Webinar by Sunil',
-            'created_by': 'sunil.madan',
-            'created_on': new Date()
-        },
-        {
-            'img_url': BASE_URL + 'media/weblets/Binary%20Search%20tree/thumbnail/preview_3.png',
-            'title': 'Webinar by Richa',
-            'created_by': 'richa.ahuja',
-            'created_on': new Date()
-        },
+    let host = 'http://localhost:8001';
+    let portalId = document.currentScript.dataset.id;
 
-    ];
+    let style = document.createElement('link');
+    style.rel = 'stylesheet';
+    style.href = host + '/static/css/sdk.css'
+    document.head.appendChild(style);
 
-    var css = document.createElement('link');
-    css.href = BASE_URL + 'static/css/sdk.css';
-    css.rel = 'stylesheet';
-    document.getElementsByTagName('head')[0].appendChild(css);
+    const request = new XMLHttpRequest();
+    request.open("GET", host + "/api/portals/"+portalId);
 
-    let root_ele = document.getElementById('lw-root');
-    
-    let container_ele = document.createElement('div');
-    container_ele.setAttribute('class', 'container');
-    root_ele.appendChild(container_ele);
+    function create_weblet_card(title, img_url, created_by, created_on) {
+       let lwCard = document.createElement('div');
+       lwCard.classList.add('lw-card');
 
-    let col_ele = document.createElement('div');
-    col_ele.setAttribute('class', 'col');
-    container_ele.appendChild(col_ele);
+       let lwImg = document.createElement('img');
+       lwImg.src = host + img_url;
+       lwImg.alt = '';
 
-    weblets.forEach(function(r) {
-        let card = document.createElement('div');
-        card.setAttribute('class', 'card');
+       lwCardBody = document.createElement('div');
+       lwCardBody.classList.add('card-body');
 
-        let card_img = document.createElement('img');
-        card_img.setAttribute('src', r.img_url);
-        card_img.setAttribute('class', 'card-img-top');
-        card.appendChild(card_img);
+       lwCardTitle = document.createElement('div');
+       lwCardTitle.classList.add('title');
+       if (title.length > 20)
+           title = title.slice(0, 25) + ' ...';
+       lwCardTitle.textContent = title;
 
-        let card_body = document.createElement('div');
-        card_body.setAttribute('class', 'card-body');
-        card.appendChild(card_body);
+       lwCardMeta = document.createElement('div');
+       lwCardMeta.classList.add('meta');
+       if (created_by.length > 24)
+           created_by = created_by.slice(0, 26) + ' ...';
+       lwCardMeta.innerHTML = `<span style="margin-bottom: 0.5rem;">- by ${created_by}</span><span>- on ${created_on}</span>`;
 
-        let card_title = document.createElement('h4');
-        card_title.setAttribute('class', 'card-title');
-        card_title.innerText = r.title;
-        card_body.appendChild(card_title);
+       lwCardBody.append(lwCardTitle);
+       lwCardBody.append(lwCardMeta);
 
-        col_ele.appendChild(card);
-    })
+       lwCard.append(lwImg);
+       lwCard.append(lwCardBody);
+
+       return lwCard;
+
+    }
+
+    request.onreadystatechange = function() {
+       if (this.readyState == 4 && this.status == 200) {
+           const response = JSON.parse(this.responseText);
+           let lwContainer = document.getElementById('lw-portals-container');
+           response['weblets'].forEach(function(weblet) {
+               let lwCard = create_weblet_card(weblet.title, weblet.img_url, weblet.created_by, weblet.created_on)
+               lwContainer.append(lwCard);
+           })
+       }
+    };
+
+    request.send();
 
 })();

@@ -22,6 +22,7 @@ class Portal(models.Model):
     title = models.CharField(max_length=512)
     status = models.CharField(max_length=10, default='draft', choices=PORTAL_STATUS_ENUM)
     slug = models.SlugField(unique=True, blank=True)
+    sharable_script = models.TextField(blank=True)
     created_on = models.DateTimeField(auto_now=True)
     last_modified_on = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True,

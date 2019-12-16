@@ -18,12 +18,5 @@ def weblet_detail_view(request, slug):
     return render(request, 'public/weblet_detail.html', context)
 
 
-def test_view(_):
-    from django.http import HttpResponse
-    from django.template.loader import render_to_string
-    from web.utils.email_sender import send_email
-    msg_html = render_to_string('emails/test.html', {
-        'email': 'some'
-    })
-    send_email('Test', msg_html, 'abhik.chy@gmail.com')
-    return HttpResponse('Testing')
+def portal_detail(request):
+    return render(request, 'public/portals.html')

@@ -1,87 +1,31 @@
-#lw-root .container {
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
+#lw-portals-container {
+   width: 90%;
+   margin: auto;
+   padding-left: 5%;
+   padding-right: 5%;
 }
-
-#lw-root .container .col {
-    position: relative;
-    display: -webkit-inline-box;
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
+#lw-portals-container .lw-card {
+   width: 22%;
+   margin: 1%;
+   float: left;
+   font-family: sans-serif;
+   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+   transition: 0.3s;
+   background-color: white;
 }
-
-#lw-root .container .col .card {
-    position: relative;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.25rem;
+#lw-portals-container .lw-card img {
+   width: 100%;
+   height: 150px;
 }
-#lw-root .container .col .card-img-top {
-    width: 100%;
+#lw-portals-container .lw-card .card-body {
+   padding: 1.25rem;
 }
-
-#lw-root .container .col .card .card-body {
-    padding: 0.8rem 1rem;
+#lw-portals-container .lw-card .title {
+   font-size: 16px;
+   font-family: inherit;
+   margin-bottom: 1rem;
 }
-
-#lw-root .container .col .card .card-body .card-title {
-    margin-bottom: 0.75rem;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-}
-
-/* mobile */
-@media (min-width: 576px) {
-    #lw-root .container {
-        max-width: 540px;
-    }
-    #lw-root .container  .col {
-        -ms-flex: 0 0 100%;
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
-}
-  
-/* tablet */
-@media (min-width: 768px) {
-    #lw-root .container {
-        max-width: 720px;
-    }
-    #lw-root .container .col {
-        -ms-flex: 0 0 50%;
-        flex: 0 0 50%;
-        max-width: 50%;
-    }
-}
-
-/* laptop */
-@media (min-width: 992px) {
-    #lw-root .container {
-        max-width: 960px;
-    }
-    #lw-root .container .col {
-        width: 33.3%; 
-    }
-}
-
-/* desktop */
-@media (min-width: 1200px) {
-    #lw-root .container {
-        max-width: 1140px;
-    }
-    #lw-root .container .col {
-        -ms-flex: 0 0 25%;
-        flex: 0 0 25%;
-        max-width: 25%;
-    }
+#lw-portals-container .lw-card .meta span {
+   font-size: 12px;
+   display: block;
 }

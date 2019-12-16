@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.urls import reverse_lazy
+from django.conf import settings
 
 from .models import Portal, PortalWeblet
 from .forms import PortalForm, PortalWebletForm
@@ -54,6 +55,8 @@ def portal_update_view(request, slug):
     if request.method == 'POST':
         form = PortalForm(instance=instance, data=request.POST)
         if form.is_valid():
+            if form.instance.status != 'published':
+                form.instance.sharable_script = ''
             form.instance.last_modified_by = request.user
             form.save()
             return redirect('portals:list')
@@ -118,3 +121,18 @@ def portal_weblet_remove_view(_, portal_weblet_id):
     portal = portal_weblet.portal
     portal_weblet.delete()
     return redirect(reverse_lazy('portals:update', kwargs={'slug': portal.slug}))
+
+
+@login_required(login_url='accounts:login')
+def portal_sharable_script(_, slug):
+    instance = get_object_or_404(Portal, slug=slug)
+    if instance.status == 'published':
+        instance.sharable_script = '''
+            <div id="lw-portals-container"></div>
+            <script src="{}/static/js/sdk.js" data-id="{}"></script>
+        '''.format(settings.HOST, instance.id)
+        instance.save()
+    else:
+        raise Exception('Script cannot be generated until the portal is published')
+    return redirect(reverse_lazy('portals:update', kwargs={'slug': instance.slug}))
+

@@ -40,13 +40,16 @@
 
         <div class="card shadow-sm my-4">
             <div class="card-body">
-                <h4 class="card-title">Generate Sharable Script</h4>
+                <h4 class="card-title">Sharable Script</h4>
                 <h6 class="card-text">This can only be generated once a portal is published.</h6>
                 <hr class="mt-2">
 
                 <div class="text-center py-5">
                     {% if object.status == 'published' %}
-                    <button class="btn btn-outline-primary">Generate</button>
+                        <code>{{ object.sharable_script|linebreaks }}</code>
+                    {% endif %}
+                    {% if object.status == 'published' and not object.sharable_script %}
+                    <a href="{% url 'portals:sharable_script' object.slug %}" class="btn btn-outline-primary">Generate</a>
                     {% endif %}
                 </div>
             </div>

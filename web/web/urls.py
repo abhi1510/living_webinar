@@ -4,16 +4,14 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from .views import home_view, weblet_detail_view, test_view
+from .views import home_view, weblet_detail_view, portal_detail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', home_view, name='home'),
     path('webcast/<str:slug>', weblet_detail_view, name='weblet_detail_view'),
-
-    # temp
-    path('test', test_view),
+    path('portal_detail', portal_detail, name='portal_detail'),
 
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('dashboard', include('dashboard.urls', namespace='dashboard')),
