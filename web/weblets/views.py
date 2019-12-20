@@ -117,7 +117,12 @@ def zoom_import(request):
         res = requests.get('https://api.zoom.us/v2/users/{}/webinars'.format('richa.ahuja@livingwebinar.com'),
                            params=params, headers=headers)
         if res.status_code == 200:
+            res.raise_for_status()
             webinars = res.json()['webinars']
+            for webinar in webinars:
+                recording = requests.get('https://api.zoom.us/v2/meetings/{}/recordings'.format(webinar['id']),
+                                         params=params, headers=headers)
+                print(recording.status_code, recording.json())
             context['webinars'] = webinars
             context['message'] = 'You are good to start importing'
         else:
