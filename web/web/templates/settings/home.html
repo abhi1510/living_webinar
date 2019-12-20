@@ -16,6 +16,8 @@
 
 
 
+
+
 </style>
 {% endblock %}
 
@@ -62,9 +64,14 @@
                      aria-labelledby="pills-account-info-tab">
                     <div class="row p-4">
                         <div class="col-lg-4">
-                            <div class="text-center shadow-sm py-4 mb-4">
-                                <img src="http://eliteadmin.themedesigner.in/demos/bt4/assets/images/users/2.jpg"
-                                     class="rounded-circle" alt="..." height="100px">
+                            <div class="text-center shadow-sm pb-1 mb-4">
+                                {% if request.user.image_file %}
+                                <img src="{{ request.user.image_file.url }}"
+                                     class="rounded-circle" alt="..." height="80px" width="80px">
+                                {% else %}
+                                <img src="/static/assets/default-user.png"
+                                     class="rounded-circle" alt="..." height="80px" width="80px">
+                                {% endif %}
                                 <h6 class="mt-3">{{ request.user.email }}</h6>
                                 <p style="font-size: 11px">
                                     <strong class="text-theme-primary mr-2">{{ request.user.type|title }}</strong>
@@ -76,7 +83,7 @@
                                     Last Updated On {{ request.user.last_modified_on }}
                                 </p>
                             </div>
-                            <form action="{% url 'settings:user_update' %}" method="post">
+                            <form action="{% url 'settings:user_update' %}" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="form-row">
                                     <div class="form-group col-md-12 mb-0">
@@ -84,6 +91,17 @@
                                     </div>
                                     <div class="form-group col-md-12 mb-0">
                                         {{ user_change_form.last_name|as_crispy_field }}
+                                    </div>
+                                    <div class="form-group col-md-12 mb-0">
+                                        <div id="div_id_image_file" class="form-group">
+                                            <label for="id_image_file" class="col-form-label ">
+                                                Image file
+                                            </label>
+                                            <div class="">
+                                                <input type="file" name="image_file" accept="image/*"
+                                                       class="clearablefileinput" id="id_image_file">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <button class="btn btn-sm btn-primary">Update</button>
@@ -95,7 +113,7 @@
 
                                 <div class="form-row">
                                     <div class="form-group col-md-12 mb-0">
-                                        {{ account_form.organisation_name|as_crispy_field }}
+                                        {{ account_form.organization_name|as_crispy_field }}
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -345,9 +363,6 @@
             console.log('Invalid theme');
         }
     }
-
-
-
 
 
 

@@ -44,7 +44,7 @@ class SignUpForm(UserCreationForm):
 class AccountForm(forms.ModelForm):
     class Meta:
         model = Account
-        fields = ('organisation_name', 'country', 'state', 'city', 'street_address', 'zip', 'phone')
+        fields = ('organization_name', 'country', 'state', 'city', 'street_address', 'zip', 'phone')
         widgets = {
             'street_address': forms.Textarea(attrs={'rows': 6})
         }

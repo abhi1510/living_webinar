@@ -17,8 +17,13 @@
     <div class="user-profile">
         <div class="user-profile-body">
             <div>
-                <img src="http://eliteadmin.themedesigner.in/demos/bt4/assets/images/users/2.jpg"
-                     alt="user-img" class="rounded-circle">
+                {% if request.user.image_file %}
+                <img src="{{ request.user.image_file.url }}"
+                     class="rounded-circle" alt="...">
+                {% else %}
+                <img src="/static/assets/default-user.png"
+                     class="rounded-circle" alt="...">
+                {% endif %}
             </div>
             <div class="dropdown">
                 <a href="javascript:void(0)" class="dropdown-toggle u-dropdown link hide-menu"

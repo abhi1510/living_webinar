@@ -29,7 +29,8 @@ class WebletManager(models.Manager):
 
     def search(self, query):
         lookups = Q(title__icontains=query) | Q(description__icontains=query) | Q(
-            presenters__full_name__icontains=query) | Q(tags__icontains=query)
+            presenters__full_name__icontains=query) | Q(presenters__company_name__icontains=query) | Q(
+            tags__icontains=query)
         return self.get_queryset().filter(lookups).distinct()
 
 

@@ -22,7 +22,7 @@ USER_STATUS_CHOICES = (
 
 
 class Account(models.Model):
-    organisation_name = models.CharField(max_length=200, unique=True)
+    organization_name = models.CharField(max_length=200, unique=True)
     street_address = models.TextField(null=True, blank=True)
     city = models.CharField(max_length=128, null=True, blank=True)
     state = models.CharField(max_length=128, null=True, blank=True)
@@ -35,7 +35,7 @@ class Account(models.Model):
     last_modified_by = models.CharField(max_length=256)
 
     def __str__(self):
-        return self.organisation_name
+        return self.organization_name
 
 
 class CustomUserManager(BaseUserManager):
@@ -70,6 +70,7 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES)
     status = models.CharField(max_length=15, choices=USER_STATUS_CHOICES)
+    image_file = models.ImageField(null=True, blank=True, upload_to='profile_pics')
     account = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, blank=True, related_name='users')
     created_on = models.DateTimeField(auto_now=True)
     last_modified_on = models.DateTimeField(auto_now_add=True)

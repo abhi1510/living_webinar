@@ -34,12 +34,13 @@
 }
 
 .user-profile {
-    margin: 20px 0 25px 0;
+    margin: 15px 0 25px 0;
     text-align: center;
 }
 
 .user-profile .user-profile-body img {
     width: 50px;
+    height: 50px;
     display: block;
     margin: 0 auto 10px;
 }

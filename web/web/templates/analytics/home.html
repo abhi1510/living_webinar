@@ -2,6 +2,14 @@
 
 {% block substyle %}
 <style>
+    .list-group-item {
+        border: 0;
+        font-size: 14px;
+    }
+    .list-group-item i {
+        font-size: 12px;
+        color: var(--theme-secondary);
+    }
 </style>
 {% endblock %}
 
@@ -32,9 +40,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <h4 class="card-title">Weblet Watched</h4>
-                        <h6 class="card-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores,
-                            at.</h6>
+                        <h4 class="card-title">Weblet Watched by Known vs Anonymous Users</h4>
                     </div>
                     <div>
                         <div class="form-group">
@@ -51,32 +57,127 @@
     </div>
 </div>
 
+<div class="row mb-4">
+    <div class="col col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">Watcher Sources</h4>
+                    </div>
+                </div>
+                <div id="pieChart1" style="height: 230px"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">Weblets Watched</h4>
+                    </div>
+                </div>
+                <div id="pieChart2" style="height: 230px"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">Facts</h4>
+                    </div>
+                </div>
+                <div style="height: 230px">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <i class="fas fa-circle"></i> Total Weblets are 30
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-circle"></i> On an avg. 200 user visits per week
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-circle"></i> 60% of weblets are being watched from LW.com
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-circle"></i> US is the top consumer of this application.
+                            Total Watchers constitute 45%
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}
 
 {% block subscript %}
 <script>
     $(document).ready(function () {
+
         c3.generate({
             bindto: '#webletWatchAnalysis',
             data: {
-            x : 'x',
                 columns: [
-                  ['x', 'weblets', 'Weblet 1', 'Weblet 2', 'Weblet 3', 'Weblet 4', 'Weblet 5', 'Weblet 6'],
-                  ['Weblets Count', 5, 3, 0, 7, 9, 2],
+                    ['Known', 130, 100, 140, 200, 150, 50, 130, 100, 140, 200, 150, 50, 30],
+                    ['Anonymous', 0, 200, 100, 400, 150, 250, 0, 200, 100, 400, 150, 250, 65],
                 ],
-                type: 'bar'
+                type: 'bar',
+                colors: {
+                    Known: '#2ea59c',
+                    Anonymous: '#95a5a6',
+                }
             },
             axis: {
-                   x: {
+                x: {
                     type: 'category',
-                    tick: {
-                        rotate: 75,
-                         multiline: false
-                     },
-                     height: 130
-                    }
+                    categories: ['week 1', 'week 2', 'week 3', 'week 4', 'week 5', 'week 6',
+                       'week 7', 'week 8', 'week 9', 'week 10', 'week 11', 'week 12', 'week 13']
                 }
-              });
-            })
+            },
+            bar: {
+                width: {
+                    ratio: 0.5
+                }
+            }
+        });
+
+        c3.generate({
+            bindto: '#pieChart1',
+            data: {
+                columns: [
+                    ['LW.Com', 70],
+                    ['Direct Link', 120],
+                    ['Others', 50],
+                ],
+                type : 'pie',
+                colors: {
+                    'LW.Com': '#2ea59c',
+                    'Direct Link': '#95a5a6',
+                    'Others': 'lightpink'
+                }
+            }
+        });
+
+        c3.generate({
+            bindto: '#pieChart2',
+            data: {
+                columns: [
+                    ['Watched', 90],
+                    ['Weblets', 250],
+                ],
+                type : 'pie',
+                colors: {
+                    'Watched': '#2ea59c',
+                    'Weblets': '#95a5a6',
+                }
+            }
+        });
+
+    });
 </script>
 {% endblock %}

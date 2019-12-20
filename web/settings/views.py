@@ -32,7 +32,7 @@ def account_update_view(request):
 @login_required(login_url='accounts:login')
 def user_update_view(request):
     if request.method == 'POST':
-        form = UserUpdateForm(instance=request.user, data=request.POST)
+        form = UserUpdateForm(instance=request.user, data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
     return redirect('settings:home')
