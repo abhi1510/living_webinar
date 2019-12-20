@@ -1,6 +1,6 @@
 import json
-import requests
 
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import generic
 from django.urls import reverse_lazy
@@ -8,6 +8,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Weblet
 from .forms import WebletForm
+from .utils import save_weblet
+from .services import get_webinars, get_recordings
 from presenters.models import Presenter
 
 
@@ -103,30 +105,40 @@ def manipulate_weblet_presenter(request):
 
 
 def zoom_import(request):
-    context = {}
+    context = dict()
     token_type = request.session.get('token_type')
     access_token = request.session.get('access_token')
+
     if token_type and access_token:
-        headers = {
-            'Authorization': '{} {}'.format(token_type, access_token)
-        }
-        params = {
-            'page_size': 30,
-            'page_number': 1
-        }
-        res = requests.get('https://api.zoom.us/v2/users/{}/webinars'.format('richa.ahuja@livingwebinar.com'),
-                           params=params, headers=headers)
-        if res.status_code == 200:
-            res.raise_for_status()
-            webinars = res.json()['webinars']
-            for webinar in webinars:
-                recording = requests.get('https://api.zoom.us/v2/meetings/{}/recordings'.format(webinar['id']),
-                                         params=params, headers=headers)
-                print(recording.status_code, recording.json())
-            context['webinars'] = webinars
-            context['message'] = 'You are good to start importing'
+        recordings = []
+        status_code, json_data = get_webinars('richa.ahuja@livingwebinar.com', token_type, access_token)
+        if status_code == 200:
+            for w in json_data['webinars']:
+
+                status_code, json_data = get_recordings(w['id'], token_type, access_token)
+                if status_code == 200:
+                    recording_link = json_data['share_url']
+                else:
+                    recording_link = ''
+                recordings.append({
+                    'id': w['id'],
+                    'title': w['topic'],
+                    'description': w['agenda'],
+                    'recording_link': recording_link
+                })
+            context['webinars'] = recordings
         else:
-            context['error'] = res.json()['message']
-    else:
-        context['message'] = 'Click \'Add to Zoom\' to start importing'
+            context['error'] = json_data['message']
+    # context['webinars'] = [
+    #     {'id': 1, 'title': 'Title 1', 'description': 'Some Description', 'recording_link': ''},
+    #     {'id': 2, 'title': 'Title 2', 'description': 'Some Description', 'recording_link': 'xyz'},
+    #     {'id': 3, 'title': 'Title 3', 'description': 'Some Description', 'recording_link': ''},
+    #     {'id': 4, 'title': 'Title 4', 'description': 'Some Description', 'recording_link': 'mno'}
+    # ]
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        recording_link = request.POST.get('recording_link')
+        save_weblet(request.user, title, description, recording_link)
+        return HttpResponse('OK')
     return render(request, 'weblets/zoom_import.html', context)

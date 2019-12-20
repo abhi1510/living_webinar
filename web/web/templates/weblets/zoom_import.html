@@ -1,5 +1,6 @@
 {% extends 'layouts/author.html' %}
 
+
 {% block content %}
 
 <div class="row page-title">
@@ -20,11 +21,6 @@
                     </a>
                 </li>
             </ol>
-            <a href="https://zoom.us/oauth/authorize?response_type=code&client_id=2AAjch3rQ0mRQdRZmK4UlA&redirect_uri=http://localhost:8001/accounts/oauth/token"
-               target="_blank" rel="noopener noreferrer" class="ml-3">
-                <img src="https://marketplacecontent.zoom.us/zoom_marketplace/img/add_to_zoom.png" height="25"
-                     alt="Add to ZOOM"/>
-            </a>
         </div>
     </div>
 </div>
@@ -34,35 +30,90 @@
         <div class="card">
             <div class="card-body">
                 {% if error %}
-                    <h4 class="mt-5">{{ error}}</h4>
+                <h4 class="mt-5">{{ error}}</h4>
                 {% else %}
                 <h4 class="card-title">Import Your Weblets</h4>
-                <h6 class="card-subtitle text-info">
-                    {{ message }}
+                <h6 class="card-subtitle text-muted">
+                    Note: Webinars without a recording cannot be imported!
                 </h6>
                 {% endif %}
                 <br>
-                <ul class="list-group">
+                <ul class="list-group" id="webletsList">
                     {% for webinar in webinars %}
                     <li class="list-group-item p-4">
-                        {{ webinar.topic }} <br>
-                        ID: {{ webinar.id }} <br>
-                        UUID: {{ webinar.uuid }} <br>
-                        HOST_ID: {{ webinar.host_id }} <br>
-                        TYPE: {{ webinar.type }} <br>
-                        START_TIME: {{ webinar.start_time }} <br>
-                        DURATION: {{ webinar.duration }} <br>
-                        TIMEZONE: {{ webinar.timezone }} <br>
-                        AGENDA: {{ webinar.agenda }} <br>
-                        CREATED_AT: {{ webinar.created_at }} <br>
-                        JOIN_URL: {{ webinar.join_url }} <br>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="{{ webinar.id }}"
+                                   {% if not webinar.recording_link %}disabled{% endif %}>
+                            <label class="form-check-label" for="{{ webinar.id }}">
+                                Id: {{ webinar.id }}
+                            </label>
+                        </div>
+                        <div>Title: {{ webinar.title }}</div>
+                        <div>Description: {{ webinar.description }}</div>
+                        {% if webinar.recording_link %}
+                        <div>
+                            Recording Link: <a href="{{ webinar.recording_link }}" target="_blank">Visit Recording</a>
+                        </div>
+                        {% else %}
+                        <div>Recording Link: <span class="text-warning">Not available</span></div>
+                        {% endif %}
                     </li>
                     {% endfor %}
                 </ul>
+                <br>
+                <a href="{% url 'weblets:list' %}" class="btn btn-secondary btn-sm">Cancel</a>
+                {% if not error %}
+                <button class="btn btn-primary btn-sm" id="importWeblets">
+                    Import Weblets
+                </button>
+                {% endif %}
+
             </div>
         </div>
     </div>
 </div>
 
 
+{% endblock %}
+
+{% block subscript %}
+<script>
+
+    $('#importWeblets').click(function() {
+        let checkedWebletsParent = $('#webletsList li input:checked').parent().parent();
+        if(checkedWebletsParent.length > 0) {
+            checkedWebletsParent.each(function(i, e) {
+                let payload = {
+                    'title': e.children[1].innerHTML.slice(7),
+                    'description': e.children[2].innerHTML.slice(13),
+                    'recording_link': $(this).find('a').attr('href'),
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                }
+
+                $('#importWeblets').html('<i class="fas fa-sync-alt fa-spin"></i> Importing');
+
+                $.ajax({
+                    url : "/weblets/zoom/import",
+                    type : "POST",
+                    data : payload,
+
+                    // handle a successful response
+                    success : function(json) {
+                        toastr.success(payload.title + ' imported!');
+                        $('#importWeblets').html('Import Weblets');
+                    },
+                    error : function(xhr,errmsg,err) {
+                        console.log(xhr.status + ": " + xhr.responseText);
+                        $('#importWeblets').html('Import Weblets');
+                    }
+                });
+            });
+        } else {
+            alert('Check Weblet to import');
+        }
+    });
+
+
+
+</script>
 {% endblock %}
