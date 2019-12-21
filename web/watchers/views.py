@@ -13,6 +13,11 @@ class WatcherListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return Watcher.objects.filter(account=self.request.user.account)
 
+    def get_context_data(self, **kwargs):
+        context = super(WatcherListView, self).get_context_data(**kwargs)
+        context['page_title'] = 'Watcher'
+        return context
+
 
 def record_watcher(request, weblet_id):
     redirect_url = request.GET.get('redirect_url')

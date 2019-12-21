@@ -4,8 +4,6 @@
 
 {% load crispy_forms_tags %}
 
-{% block title %} - Presenters{% endblock %}
-
 {% block substyle %}
 <link rel="stylesheet" href="{% static 'plugins/dropify/css/dropify.min.css' %}">
 <style>
@@ -14,33 +12,27 @@
         font-family: 'Poppins', sans-serif;
     }
 
+
 </style>
 {% endblock %}
 
-{% block content %}
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="{% url 'dashboard:dashboard' %}">
+            <i class="fas fa-home"></i> Dashboard
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{% url 'presenters:list' %}">
+            Presenters
+        </a>
+    </li>
+    <li class="breadcrumb-item active">{{ title }}</li>
+</ol>
+{% endblock breadcrumb %}
 
-<div class="row page-title">
-    <div class="col-md-5 align-self-center">
-        <h4>Presenters</h4>
-    </div>
-    <div class="col-md-7 align-self-center text-right">
-        <div class="d-flex justify-content-end align-items-center">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{% url 'dashboard:dashboard' %}">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="{% url 'presenters:list' %}">
-                        Presenters
-                    </a>
-                </li>
-                <li class="breadcrumb-item active">{{ title }}</li>
-            </ol>
-        </div>
-    </div>
-</div>
+{% block content %}
 
 <div class="row mb-3">
     <div class="col">
@@ -109,6 +101,7 @@
 <script>
 $('#id_picture_thumbnail').dropify();
 $('#id_picture_large').dropify();
+
 
 </script>
 {% endblock %}

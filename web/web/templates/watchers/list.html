@@ -1,26 +1,17 @@
 {% extends 'layouts/author.html' %}
 
-{% block title %} - Watchers{% endblock %}
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="{% url 'dashboard:dashboard' %}">
+            <i class="fas fa-home"></i> Dashboard
+        </a>
+    </li>
+    <li class="breadcrumb-item active">Watchers</li>
+</ol>
+{% endblock breadcrumb %}
 
 {% block content %}
-
-<div class="row page-title">
-    <div class="col-md-5 align-self-center">
-        <h4>Watchers</h4>
-    </div>
-    <div class="col-md-7 align-self-center text-right">
-        <div class="d-flex justify-content-end align-items-center">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{% url 'dashboard:dashboard' %}">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                </li>
-                <li class="breadcrumb-item active">Watchers</li>
-            </ol>
-        </div>
-    </div>
-</div>
 
 <div class="row mb-3">
     <div class="col">
@@ -59,7 +50,8 @@
                         <tr>
                             <td>{{ page_obj.start_index|add:forloop.counter0 }}</td>
                             <td class="text-left">
-                                <img alt="" class="img-thumbnail p-0" src="{{ object.weblet.picture_thumbnail.url }}" width="35">
+                                <img alt="" class="img-thumbnail p-0" src="{{ object.weblet.picture_thumbnail.url }}"
+                                     width="35">
                                 {{ object.weblet.title }}
                             </td>
                             <td>

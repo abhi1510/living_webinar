@@ -20,6 +20,7 @@ def portal_list_view(request):
     except EmptyPage:
         portals = paginator.page(paginator.num_pages)
     context = {
+        'page_title': 'Portals',
         'object_list': portals,
         'portal_form': PortalForm(),
         'portal_form_action': reverse_lazy('portals:create'),
@@ -63,6 +64,7 @@ def portal_update_view(request, slug):
     form = PortalForm(instance=instance)
 
     return render(request, 'portals/update.html', {
+        'page_title': 'Portals',
         'object': instance,
         'portal_form': form,
         'portal_form_action': reverse_lazy('portals:update', kwargs={'slug': slug}),
@@ -78,13 +80,14 @@ def portal_delete_view(request, slug):
     if request.method == 'POST':
         instance.delete()
         return redirect('portals:list')
-    return render(request, 'portals/delete.html', {'object': instance})
+    return render(request, 'portals/delete.html', {'page_title': 'Portals', 'object': instance})
 
 
 @login_required(login_url='accounts:login')
 def portal_preview_view(request, slug):
     instance = get_object_or_404(Portal, slug=slug)
     context = {
+        'page_title': 'Portals',
         'instance': instance
     }
     return render(request, 'portals/preview.html', context)

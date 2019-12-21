@@ -2,28 +2,22 @@
 
 {% block title %} - Presenters{% endblock %}
 
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="{% url 'dashboard:dashboard' %}">
+            <i class="fas fa-home"></i> Dashboard
+        </a>
+    </li>
+    <li class="breadcrumb-item active">Presenters</li>
+</ol>
+<a href="{% url 'presenters:create' %}" class="btn btn-secondary btn-sm ml-3">
+    <i class="fa fa-plus-circle"></i> Create New
+</a>
+{% endblock breadcrumb %}
+
 {% block content %}
 
-<div class="row page-title">
-    <div class="col-md-5 align-self-center">
-        <h4>Presenters</h4>
-    </div>
-    <div class="col-md-7 align-self-center text-right">
-        <div class="d-flex justify-content-end align-items-center">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{% url 'dashboard:dashboard' %}">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                </li>
-                <li class="breadcrumb-item active">Presenters</li>
-            </ol>
-            <a href="{% url 'presenters:create' %}" class="btn btn-secondary btn-sm ml-3">
-                <i class="fa fa-plus-circle"></i> Create New
-            </a>
-        </div>
-    </div>
-</div>
 
 <div class="row mb-3">
     <div class="col">

@@ -2,8 +2,6 @@
 
 {% load crispy_forms_tags %}
 
-{% block title %} - Settings{% endblock %}
-
 {% block substyle %}
 <style>
     #hint_id_password1,  #hint_id_password2 {
@@ -13,33 +11,22 @@
 
 
 
-
-
-
-
-
 </style>
 {% endblock %}
 
-{% block content %}
 
-<div class="row page-title">
-    <div class="col-md-5 align-self-center">
-        <h4>Settings</h4>
-    </div>
-    <div class="col-md-7 align-self-center text-right">
-        <div class="d-flex justify-content-end align-items-center">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{% url 'dashboard:dashboard' %}">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                </li>
-                <li class="breadcrumb-item active">Settings</li>
-            </ol>
-        </div>
-    </div>
-</div>
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="{% url 'dashboard:dashboard' %}">
+            <i class="fas fa-home"></i> Dashboard
+        </a>
+    </li>
+    <li class="breadcrumb-item active">Settings</li>
+</ol>
+{% endblock breadcrumb %}
+
+{% block content %}
 
 <ul class="nav nav-pills nav-fill" id="pills-tab" role="tablist">
     <li class="nav-item">
@@ -87,10 +74,26 @@
                                 {% csrf_token %}
                                 <div class="form-row">
                                     <div class="form-group col-md-12 mb-0">
-                                        {{ user_change_form.first_name|as_crispy_field }}
+                                        <div id="div_id_first_name" class="form-group">
+                                            <label for="id_first_name1" class="col-form-label ">
+                                                First name
+                                            </label>
+                                            <div class="">
+                                                <input type="text" name="first_name" value="{{ user.first_name }}"
+                                                       maxlength="30" class="form-control" id="id_first_name1">
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group col-md-12 mb-0">
-                                        {{ user_change_form.last_name|as_crispy_field }}
+                                        <div id="div_id_last_name" class="form-group">
+                                            <label for="id_last_name1" class="col-form-label ">
+                                                Last name
+                                            </label>
+                                            <div class="">
+                                                <input type="text" name="last_name" value="{{ user.last_name }}"
+                                                       maxlength="150" class="form-control" id="id_last_name1">
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group col-md-12 mb-0">
                                         <div id="div_id_image_file" class="form-group">
@@ -294,7 +297,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{% url 'settings:user_add' %}" method="post">
+                <form action="{% url 'settings:user_add' %}" method="post" novalidate>
                     {% csrf_token %}
                     <div class="form-row">
                         <div class="form-group col-md-12 mb-0">
@@ -363,6 +366,10 @@
             console.log('Invalid theme');
         }
     }
+
+
+
+
 
 
 

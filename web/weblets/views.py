@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import generic
 from django.urls import reverse_lazy
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Weblet
@@ -22,10 +23,10 @@ class WebletListView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(WebletListView, self).get_context_data(*args, **kwargs)
+        context['page_title'] = 'Weblets'
         context['presenters'] = Presenter.objects.filter(account=self.request.user.account)
         context['weblet_presenter'] = [{weblet.id: [p.id for p in weblet.presenters.all()]} for weblet in
                                        self.get_queryset()]
-
         return context
 
 
@@ -50,6 +51,7 @@ class WebletCreateView(LoginRequiredMixin, generic.CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(WebletCreateView, self).get_context_data(**kwargs)
+        context['page_title'] = 'Weblets'
         context['title'] = 'Create'
         return context
 
@@ -58,6 +60,10 @@ class WebletCreateView(LoginRequiredMixin, generic.CreateView):
         form.instance.created_by = self.request.user
         form.instance.last_modified_by = self.request.user
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, form.errors)
+        return super().form_invalid(form)
 
 
 class WebletUpdateView(LoginRequiredMixin, generic.UpdateView):
@@ -70,6 +76,7 @@ class WebletUpdateView(LoginRequiredMixin, generic.UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(WebletUpdateView, self).get_context_data(**kwargs)
+        context['page_title'] = 'Weblets'
         context['title'] = 'Update'
         return context
 
@@ -87,7 +94,7 @@ class WebletDeleteView(LoginRequiredMixin, generic.DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super(WebletDeleteView, self).get_context_data(**kwargs)
-        context['page_title'] = 'Presenter Delete'
+        context['page_title'] = 'Weblets'
         return context
 
 
@@ -106,6 +113,7 @@ def manipulate_weblet_presenter(request):
 
 def zoom_import(request):
     context = dict()
+    context['page_title'] = 'Weblets'
     token_type = request.session.get('token_type')
     access_token = request.session.get('access_token')
 

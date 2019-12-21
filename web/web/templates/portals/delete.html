@@ -1,29 +1,22 @@
 {% extends 'layouts/author.html' %}
 
-{% block content %}
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="{% url 'dashboard:dashboard' %}">
+            <i class="fas fa-home"></i> Dashboard
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{% url 'portals:list' %}">
+            Portals
+        </a>
+    </li>
+    <li class="breadcrumb-item active">Delete</li>
+</ol>
+{% endblock breadcrumb %}
 
-<div class="row page-title">
-    <div class="col-md-5 align-self-center">
-        <h4>Presenters</h4>
-    </div>
-    <div class="col-md-7 align-self-center text-right">
-        <div class="d-flex justify-content-end align-items-center">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{% url 'dashboard:dashboard' %}">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="{% url 'portals:list' %}">
-                        Portals
-                    </a>
-                </li>
-                <li class="breadcrumb-item active">Delete</li>
-            </ol>
-        </div>
-    </div>
-</div>
+{% block content %}
 
 <div class="row mb-3">
     <div class="col">
@@ -31,14 +24,15 @@
             <div class="card-body">
                 <h4 class="card-title">Delete Portal</h4>
                 <h6 class="card-subtitle">
-                    Portals are a collection of Weblets that can be presented on your website or sent to your audience via email. You can create multiple portals and get unique public pages for your portals.
+                    Portals are a collection of Weblets that can be presented on your website or sent to your audience
+                    via email. You can create multiple portals and get unique public pages for your portals.
                 </h6>
 
                 <form action="" method="post" class="mt-5">
                     {% csrf_token %}
                     <h5>Are you sure you want to delete {{ object.title }} ?</h5>
                     <small>
-                        <i class="fas fa-user"></i> {{ object.user.email }}
+                        <i class="fas fa-user"></i> {{ object.created_by }}
                         <i class="fas fa-calendar-alt ml-3"></i> {{ object.created_on }}
                     </small>
                     <div class="my-4">

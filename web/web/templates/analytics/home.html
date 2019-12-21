@@ -10,29 +10,22 @@
         font-size: 12px;
         color: var(--theme-secondary);
     }
+
 </style>
-{% endblock %}
+{% endblock substyle %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="{% url 'dashboard:dashboard' %}">
+            <i class="fas fa-home"></i> Dashboard
+        </a>
+    </li>
+    <li class="breadcrumb-item active">Analytics</li>
+</ol>
+{% endblock breadcrumb %}
 
 {% block content %}
-
-<div class="row page-title">
-    <div class="col-md-5 align-self-center">
-        <h4>Analytics</h4>
-    </div>
-    <div class="col-md-7 align-self-center text-right">
-        <div class="d-flex justify-content-end align-items-center">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{% url 'dashboard:dashboard' %}">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                </li>
-                <li class="breadcrumb-item active">Analytics</li>
-            </ol>
-        </div>
-    </div>
-</div>
-
 
 <div class="row mb-4">
     <div class="col">
@@ -179,5 +172,6 @@
         });
 
     });
+
 </script>
 {% endblock %}

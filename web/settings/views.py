@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.contrib import messages
 
 from accounts.models import USER_STATUS_CHOICES
 from accounts.forms import AccountForm
@@ -9,13 +10,14 @@ from .forms import UserAddForm, UserUpdateForm
 
 @login_required(login_url='accounts:login')
 def home_view(request):
-    account = request.user.account
+    user = request.user
     context = {
-        'account': account,
-        'users': '',
-        'account_form': AccountForm(instance=account),
+        'page_title': 'Settings',
+        'account': user.account,
+        'user': user,
+        'account_form': AccountForm(instance=user.account),
         'user_add_form': UserAddForm(),
-        'user_change_form': UserUpdateForm(instance=request.user),
+        'user_change_form': UserUpdateForm(instance=user),
     }
     return render(request, 'settings/home.html', context)
 
@@ -50,5 +52,6 @@ def user_add_view(request):
             form.instance.created_by = logged_in_user
             form.instance.last_modified_by = logged_in_user
             form.save()
-
+        else:
+            messages.error(request, form.errors)
     return redirect('settings:home')

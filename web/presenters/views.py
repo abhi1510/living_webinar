@@ -15,6 +15,7 @@ class PresenterListView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(PresenterListView, self).get_context_data(*args, **kwargs)
+        context['page_title'] = 'Presenter'
         return context
 
 
@@ -26,7 +27,7 @@ class PresenterDetailView(LoginRequiredMixin, generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(PresenterDetailView, self).get_context_data(**kwargs)
-        context['page_title'] = 'Presenter Detail'
+        context['page_title'] = 'Presenter'
         return context
 
 
@@ -40,6 +41,7 @@ class PresenterCreateView(LoginRequiredMixin, generic.CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(PresenterCreateView, self).get_context_data(**kwargs)
+        context['page_title'] = 'Presenter'
         context['title'] = 'Create'
         return context
 
@@ -60,6 +62,7 @@ class PresenterUpdateView(LoginRequiredMixin, generic.UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(PresenterUpdateView, self).get_context_data(**kwargs)
+        context['page_title'] = 'Presenter'
         context['title'] = 'Update'
         return context
 
@@ -77,4 +80,5 @@ class PresenterDeleteView(LoginRequiredMixin, generic.DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super(PresenterDeleteView, self).get_context_data(**kwargs)
+        context['page_title'] = 'Presenter'
         return context

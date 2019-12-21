@@ -1,33 +1,25 @@
 {% extends 'layouts/author.html' %}
 
-{% block title %} - Portals{% endblock %}
-
 {% load static %}
 
-{% block content %}
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="{% url 'dashboard:dashboard' %}">
+            <i class="fas fa-home"></i> Dashboard
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{% url 'portals:list' %}">
+            Portals
+        </a>
+    </li>
+    <li class="breadcrumb-item active">Update</li>
+</ol>
+{% endblock breadcrumb %}
 
-<div class="row page-title">
-    <div class="col-md-5 align-self-center">
-        <h4>Portals</h4>
-    </div>
-    <div class="col-md-7 align-self-center text-right">
-        <div class="d-flex justify-content-end align-items-center">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{% url 'dashboard:dashboard' %}">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="{% url 'portals:list' %}">
-                        Portals
-                    </a>
-                </li>
-                <li class="breadcrumb-item active">Update</li>
-            </ol>
-        </div>
-    </div>
-</div>
+
+{% block content %}
 
 <div class="row mb-3">
     <div class="col-lg-5">
@@ -46,10 +38,11 @@
 
                 <div class="text-center py-5">
                     {% if object.status == 'published' %}
-                        <code>{{ object.sharable_script|linebreaks }}</code>
+                    <code>{{ object.sharable_script|linebreaks }}</code>
                     {% endif %}
                     {% if object.status == 'published' and not object.sharable_script %}
-                    <a href="{% url 'portals:sharable_script' object.slug %}" class="btn btn-outline-primary">Generate</a>
+                    <a href="{% url 'portals:sharable_script' object.slug %}"
+                       class="btn btn-outline-primary">Generate</a>
                     {% endif %}
                 </div>
             </div>

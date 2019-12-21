@@ -5,31 +5,20 @@
     .card {
         cursor: pointer;
     }
+
+
+
 </style>
 {% endblock %}
 
-{% block content %}
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item active"><i class="fas fa-home"></i> Dashboard</li>
+</ol>
+{% endblock breadcrumb %}
 
-<div class="row page-title">
-    <div class="col-md-5 align-self-center">
-        <h4>Dashboard</h4>
-    </div>
-    <div class="col-md-7 align-self-center text-right">
-        <div class="d-flex justify-content-end align-items-center">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{% url 'dashboard:dashboard' %}">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                </li>
-                <li class="breadcrumb-item active">Dashboard</li>
-            </ol>
-            <a href="" class="btn btn-sm btn-secondary ml-3">
-                <i class="fa fa-plus-circle"></i> Create New
-            </a>
-        </div>
-    </div>
-</div>
+
+{% block content %}
 
 <div class="row mb-4">
     <div class="col">
@@ -101,5 +90,8 @@
     $('#widgetsTile .card').click(function() {
         window.location.href = window.location.origin + '/' + $(this).attr('data-name');
     });
+
+
+
 </script>
 {% endblock %}
