@@ -52,8 +52,13 @@
                     {% for object in object_list %}
                     <div class="col-lg-3">
                         <div class="card shadow mb-3">
+                            {% if  object.picture_thumbnail %}
                             <img class="card-img-top" src="{{ object.picture_thumbnail.url }}"
                                  alt="Card image cap" height="150px;">
+                            {% else %}
+                            <img class="card-img-top" src="/static/assets/ImageNotAvailable.png"
+                                 alt="Card image cap" height="150px;">
+                            {% endif %}
                             <div class="card-img-overlay pt-2 pr-2 text-right" style="height: 30px">
                                 <button class="btn btn-sm btn-primary" data-toggle="modal"
                                         data-target="#addPresenterModal" data-weblet-id="{{object.id}}">

@@ -31,8 +31,8 @@ class Account(models.Model):
     phone = models.CharField(max_length=128, null=True, blank=True)
     created_on = models.DateTimeField(auto_now=True)
     last_modified_on = models.DateTimeField(auto_now_add=True)
-    created_by = models.CharField(max_length=256)
-    last_modified_by = models.CharField(max_length=256)
+    created_by = models.CharField(max_length=256, null=True, blank=True)
+    last_modified_by = models.CharField(max_length=256, null=True, blank=True)
 
     def __str__(self):
         return self.organization_name
@@ -97,7 +97,7 @@ def user_post_save_receiver(sender, instance, created, *args, **kwargs):
 
     if created:
         if instance.type == 'admin':
-            account = Account(organisation_name=instance.email,
+            account = Account(organization_name=instance.email,
                               created_by=instance.email, last_modified_by=instance.email)
             account.save()
             instance.account = account
