@@ -30,9 +30,9 @@
                 {{ object.description|linebreaks }}
             </div>
             {% if  object.picture_large %}
-                <img src="{{ object.picture_large.url }}" alt="" width="100%" class="img-thumbnail">
+                <img src="{{ object.picture_large.url }}" alt="" class="img-thumbnail">
             {% else %}
-                <img src="/static/assets/ImageNotAvailable.png" alt="" width="100%" class="img-thumbnail">
+                <img src="/static/assets/ImageNotAvailable.png" alt="" class="img-thumbnail">
             {% endif %}
         </div>
         <div class="col-lg-4">
