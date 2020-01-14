@@ -29,7 +29,11 @@
             <div class="weblet-description">
                 {{ object.description|linebreaks }}
             </div>
-            <img src="{{ object.picture_large.url }}" alt="" width="100%" class="img-thumbnail">
+            {% if  object.picture_large %}
+                <img src="{{ object.picture_large.url }}" alt="" width="100%" class="img-thumbnail">
+            {% else %}
+                <img src="/static/assets/ImageNotAvailable.png" alt="" width="100%" class="img-thumbnail">
+            {% endif %}
         </div>
         <div class="col-lg-4">
             <div class="card borderTop">

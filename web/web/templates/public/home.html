@@ -36,8 +36,13 @@
         <div class="col-md-6 col-lg-3">
             <div id="{{object.slug}}" data-login-required="{{object.watcher_signup_required}}"
                  class="card mb-3 shadow-lg animated zoomIn borderBottom" style="cursor: pointer;">
+                {% if  object.picture_thumbnail %}
                 <img class="card-img-top" src="{{ object.picture_thumbnail.url }}"
                      alt="Card image cap" height="130px;">
+                {% else %}
+                <img class="card-img-top" src="/static/assets/ImageNotAvailable.png"
+                     alt="Card image cap" height="130px;">
+                {% endif %}
                 <div class="card-body p-3">
                     <h5 class="card-title">{{ object.title|truncatechars:24 }}</h5>
                     <div class="d-block">
