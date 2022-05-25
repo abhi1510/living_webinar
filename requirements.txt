@@ -7,7 +7,7 @@ djangorestframework==3.10.3
 gunicorn==19.9.0
 idna==2.8
 Pillow==6.2.0
-PyJWT==1.7.1
+PyJWT==2.4.0
 python-http-client==3.2.1
 pytz==2019.2
 requests==2.22.0
